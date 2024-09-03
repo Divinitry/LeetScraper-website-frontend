@@ -3,7 +3,7 @@ import React from 'react';
 const Header = () => {
     return (
         <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-sm">
-            <div className="container mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between px-4 py-8 relative">
+            <div className="container mx-auto flex flex-col lg:flex-row lg:items-center px-4 py-8 relative">
                 <div className="flex items-center justify-start w-full lg:w-auto">
                     <a href="/" className="flex items-center whitespace-nowrap text-2xl font-black text-white">
                         <span className="mr-2 w-10">
@@ -33,14 +33,15 @@ const Header = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </label>
-                <nav aria-label="Header Navigation" className="peer-checked:pt-8 peer-checked:max-h-60 flex max-h-0 w-full flex-col items-center overflow-hidden transition-all lg:max-h-full lg:flex-row lg:flex-1 lg:justify-center">
+                <nav aria-label="Header Navigation" className="peer-checked:pt-8 peer-checked:max-h-60 flex max-h-0 w-full flex-col items-center overflow-hidden transition-all lg:max-h-full lg:flex-row lg:flex-1 lg:justify-center relative">
                     <ul className="flex w-full flex-col items-center space-y-2 lg:flex-row lg:justify-center lg:space-y-0">
                         <li className="lg:mr-12"><a className="rounded text-black transition focus:outline-none font-thin text-2xl hover:text-opacity-50" href="/">Home</a></li>
                         <li className="lg:mr-12"><a className="rounded text-black transition focus:outline-none font-thin text-2xl hover:text-opacity-50" href="/todolist">Code</a></li>
                         <li className="lg:mr-12"><a className="rounded text-black transition focus:outline-none font-thin text-2xl hover:text-opacity-50" href="/search">Search</a></li>
                     </ul>
-                    <div className="my-4 flex items-center lg:my-0 lg:ml-auto">
-                        <a href="#" title="" className="whitespace-nowrap rounded transition-all duration-200 text-black focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Log in </a>
+                    <div className="absolute right-0 top-0 my-4 flex items-center lg:my-0 lg:ml-auto space-x-4">
+                        <a href="/account/signup" className="whitespace-nowrap rounded transition-all duration-200 text-black focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Sign up </a>
+                        <a href="/account/logout" className="whitespace-nowrap rounded transition-all duration-200 text-black focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Log out </a>
                     </div>
                 </nav>
             </div>
