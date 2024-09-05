@@ -6,17 +6,40 @@ whenever the function runs). for deleting things you do not need useEffect, only
 control user session
 */
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ACCESS_TOKEN } from "../constants";
 
 const TDLComponent = () => {
     const [toDoList, setToDoList] = useState([]);
+    const navigate = useNavigate();
+    const accessToken = localStorage.getItem(ACCESS_TOKEN); // remember you need to retrieve the access token for each fetch request that you make and pass it in as the bearer 
 
     useEffect(() => {
+        if (!accessToken) {
+            navigate('/login');
+            return;
+        }
+
         async function getToDoList() {
             const url = 'http://127.0.0.1:8000/leetscraper/todolist/';
             try {
-                const response = await fetch(url);
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`, 
+                    },
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        navigate('/login');
+                        return;
+                    }
+                    throw new Error('Failed to fetch the to-do list');
+                }
+
                 const data = await response.json();
-                console.log(data);
                 setToDoList(data);
             } catch (error) {
                 console.log(error.message);
@@ -24,16 +47,20 @@ const TDLComponent = () => {
         }
 
         getToDoList(); 
-    }, []);
+    }, [accessToken, navigate]); 
 
     return (
         <div className="pt-60">
-            {toDoList.map((item, index) => (
-                <div>
-                    <h1 key={index}>{item.name}</h1>
-                    <p>{item.created_time}</p>
-                </div>
-            ))}
+            {toDoList.length > 0 ? (
+                toDoList.map((item, index) => (
+                    <div key={index}>
+                        <h1>{item.name}</h1>
+                        <p>{item.created_time}</p>
+                    </div>
+                ))
+            ) : (
+                <p>Loading to-do list...</p> 
+            )}
         </div>
     );
 }

@@ -40,8 +40,8 @@ const Header = () => {
                         <li className="lg:mr-12"><a className="rounded text-black transition focus:outline-none font-thin text-2xl hover:text-opacity-50" href="/search">Search</a></li>
                     </ul>
                     <div className="absolute right-0 top-0 my-4 flex items-center lg:my-0 lg:ml-auto space-x-4">
-                        <a href="/account/signup" className="whitespace-nowrap rounded transition-all duration-200 text-black focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Sign up </a>
-                        <a href="/account/logout" className="whitespace-nowrap rounded transition-all duration-200 text-black focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Log out </a>
+                        <a href="/register" className="whitespace-nowrap rounded transition-all duration-200 text-black focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Sign up </a>
+                        <a href="/logout" className="whitespace-nowrap rounded transition-all duration-200 text-black focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Log out </a>
                     </div>
                 </nav>
             </div>
