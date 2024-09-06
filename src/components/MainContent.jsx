@@ -1,7 +1,7 @@
 const MainContent = () => {
   return (
     <div>
-      <div className="flex flex-col text-center max-w-5xl mx-auto pt-60">
+      <div className="flex flex-col text-center max-w-5xl mx-auto pt-40">
         <h1 className="animate-fade-in text-4xl font-extrabold text-black sm:text-5xl md:text-7xl opacity-0 [animation-delay:200ms] -translate-y-4">
           Experience Leetcode the way you deserve.
         </h1>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = () => {
     return (
-        <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-sm">
+        <header className="sticky top-0 left-0 w-full z-50 backdrop-blur-sm">
             <div className="container mx-auto flex flex-col lg:flex-row lg:items-center px-4 py-8 relative">
                 <div className="flex items-center justify-start w-full lg:w-auto">
                     <a href="/" className="flex items-center whitespace-nowrap text-2xl font-black text-white">
@@ -40,7 +40,7 @@ const Header = () => {
                         <li className="lg:mr-12"><a className="rounded text-black transition focus:outline-none font-thin text-2xl hover:text-opacity-50" href="/search">Search</a></li>
                     </ul>
                     <div className="absolute right-0 top-0 my-4 flex items-center lg:my-0 lg:ml-auto space-x-4">
-                        <a href="/register" className="whitespace-nowrap rounded transition-all duration-200 text-black focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Sign up </a>
+                        <a href="/login" className="whitespace-nowrap rounded transition-all duration-200 text-black focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Log in </a>
                         <a href="/logout" className="whitespace-nowrap rounded transition-all duration-200 text-black focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Log out </a>
                     </div>
                 </nav>
