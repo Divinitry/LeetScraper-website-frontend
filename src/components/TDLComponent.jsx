@@ -7,44 +7,35 @@ const TDLComponent = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getToDoList = async () => {
+    const getCodeList = async () => {
       try {
-        const response = await api.get("/leetscraper/todolist/");
-        setToDoList(response.data);
+        const response = await api.get('/leetscraper/todolist/questions/all/'); 
+        const data = response.data;
+        setToDoList(data);
       } catch (error) {
-        if (error.response && error.response.status === 401) {
-          navigate("/login");
-        } else {
-          console.error("Failed to fetch the to-do list", error.message);
-        }
+        console.error("Error fetching to-do list:", error);
       }
     };
-
-    getToDoList();
+    
+    getCodeList(); 
   }, [navigate]);
 
   return (
-    <div className="">
-      {toDoList.map((item, index) => (
-        <div key={index}>
-          <h1>{item.name}</h1>
-          <p>Created at: {item.created_time}</p>
-          <div>
-            <h3>Questions:</h3>
-            {item.questions.length > 0 ? (
-              item.questions.map((question, qIndex) => (
-                <div key={qIndex}>
-                  <p>Title: {question.question_title}</p>
-                  <p>Difficulty: {question.difficulty}</p>
-                  <p>Body: {question.body}</p>
-                </div>
-              ))
-            ) : (
-              <p>No questions available</p>
-            )}
-          </div>
-        </div>
-      ))}
+    <div>
+      <h1>To code list</h1>
+      {toDoList.length > 0 ? (
+        <ul>
+          {toDoList.map((question) => (
+            <li key={question.id}>
+              <h2>{question.question_title}</h2>
+              <p>Difficulty: {question.difficulty}</p>
+              <p>Topics: {question.topics}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No questions found.</p>
+      )}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../api";
+import { ACCESS_TOKEN } from "../constants";
 
 const SearchComponent = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,21 +30,31 @@ const SearchComponent = () => {
     try {
       const response = await api.post(`/leetscraper/todolist/questions/add/`, {
         question_title: searchData.title || "",
-        title_slug: searchData.title_slug || "",
+        title_slug: searchData.titleSlug || "",
         difficulty: searchData.difficulty || "",
         hints: searchData.Hints ? searchData.Hints.toString() : "", 
         companies: searchData.companies || "",
         topics: searchData.topics ? searchData.topics.toString() : "", 
         similar_questions: searchData.SimilarQuestions ? searchData.SimilarQuestions.toString() : "",
         code_stubs: searchData.code_stubs || "",
-        body: searchData.body || "",
+        body: searchData.Body || "",
         is_paid_only: searchData.isPaidOnly || false,
-        todolist_id: 1,
       });
-      alert("LeetCode question added to your To-Do List!");
+    
+      alert("LeetCode question added successfully!");
     } catch (error) {
-      console.error(error);
-      alert("Error adding question to To-Do List");
+      if (error.response) {
+        console.error("Error response data:", error.response.data);
+        console.error("Error response status:", error.response.status);
+        console.error("Error response headers:", error.response.headers);
+        alert(`Error: ${error.response.data.detail || "Something went wrong on the server"}`);
+      } else if (error.request) {
+        console.error("Error request data:", error.request);
+        alert("Error: No response from the server. Please check your network or try again later.");
+      } else {
+        console.error("Error message:", error.message);
+        alert(`Error: ${error.message}`);
+      }
     }
   };
   
