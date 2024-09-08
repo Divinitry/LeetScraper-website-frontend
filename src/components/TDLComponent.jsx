@@ -20,21 +20,32 @@ const TDLComponent = () => {
     getCodeList(); 
   }, [navigate]);
 
+  const deleteQuestion = async (id) => {
+    try {
+      const response = await api.delete(`/leetscraper/todolist/questions/remove/${id}/`);
+      setToDoList(toDoList.filter(item => item.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div>
       <h1>To code list</h1>
       {toDoList.length > 0 ? (
         <ul>
-          {toDoList.map((question) => (
-            <li key={question.id}>
-              <h2>{question.question_title}</h2>
-              <p>Difficulty: {question.difficulty}</p>
-              <p>Topics: {question.topics}</p>
+          {toDoList.map((codeItem) => (
+            <li key={codeItem.id}>
+              <p>{codeItem.question_title}</p>
+              <p>{codeItem.difficulty}</p>
+              <button onClick={() => deleteQuestion(codeItem.id)}>
+                Remove
+              </button>
             </li>
           ))}
         </ul>
       ) : (
-        <p>No questions found.</p>
+        <p>Add some questions with the search bar!</p>
       )}
     </div>
   );
