@@ -9,25 +9,27 @@ const TDLComponent = () => {
   useEffect(() => {
     const getCodeList = async () => {
       try {
-        const response = await api.get('/leetscraper/todolist/questions/all/'); 
+        const response = await api.get("/leetscraper/todolist/questions/all/");
         const data = response.data;
         setToDoList(data);
       } catch (error) {
         console.error("Error fetching to-do list:", error);
       }
     };
-    
-    getCodeList(); 
-  }, [navigate]);
+
+    getCodeList();
+  }, []);
 
   const deleteQuestion = async (id) => {
     try {
-      const response = await api.delete(`/leetscraper/todolist/questions/remove/${id}/`);
-      setToDoList(toDoList.filter(item => item.id !== id));
+      const response = await api.delete(
+        `/leetscraper/todolist/questions/remove/${id}/`
+      );
+      setToDoList(toDoList.filter((item) => item.id !== id));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <div>
@@ -36,8 +38,10 @@ const TDLComponent = () => {
         <ul>
           {toDoList.map((codeItem) => (
             <li key={codeItem.id}>
-              <p>{codeItem.question_title}</p>
-              <p>{codeItem.difficulty}</p>
+              <a href={`/todolist/code/${codeItem.id}`}>
+                <p>{codeItem.question_title}</p>
+                <p>{codeItem.difficulty}</p>
+              </a>
               <button onClick={() => deleteQuestion(codeItem.id)}>
                 Remove
               </button>

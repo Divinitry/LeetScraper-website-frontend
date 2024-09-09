@@ -23,10 +23,7 @@ function RegisterAndLogout() {
 
 function App() {
   return (
-    <div
-      className="min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -44,7 +41,7 @@ function App() {
               <ToDoList />
             </ProtectedRoute>
             } />
-          <Route path="/todolist/code/:code" element={
+          <Route path="/todolist/code/:id" element={
             <ProtectedRoute>
               <Code />
             </ProtectedRoute>

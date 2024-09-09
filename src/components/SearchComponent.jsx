@@ -64,6 +64,7 @@ const SearchComponent = () => {
       <h1>Search for your LeetCode question below</h1>
       <form onSubmit={handleSubmit}>
         <input
+          className="bg-black"
           type="text"
           placeholder="Name of LeetCode question"
           onChange={handleChange}
