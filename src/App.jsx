@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Code from "./pages/Code";
@@ -23,7 +22,7 @@ function RegisterAndLogout() {
 
 function App() {
   return (
-    <div>
+    <div className="pb-1">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

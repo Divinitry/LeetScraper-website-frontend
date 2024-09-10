@@ -34,14 +34,14 @@ function Form({ route, method }) {
   return (
       <form onSubmit={handleSubmit} className="flex flex-col">
         <input
-          className="bg-black"
+          className="bg-black outline-none"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
         />
         <input
-          className="bg-black"
+          className="bg-black outline-none"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}

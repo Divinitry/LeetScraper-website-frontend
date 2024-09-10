@@ -14,6 +14,9 @@ export default {
       animation: {
         'fade-in': 'fadeIn 1.5s ease-in-out forwards',
       },
+      boxShadow: {
+        'custom-purple': '0 4px 6px -1px rgba(94, 3, 252, 0.5)', 
+      },
     },
   },
   plugins: [],

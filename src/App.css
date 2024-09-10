@@ -7,6 +7,7 @@
     @apply min-h-screen text-white;
     background-color: black !important;
     height: 100%;
+    /* background: radial-gradient(circle farthest-side, rgba(113, 24, 218, 0.15), rgba(255, 255, 255, 0)); */
   }
 
   h1, h2, p, li {
@@ -17,3 +18,4 @@
     height: 100%;
   }
 }
+

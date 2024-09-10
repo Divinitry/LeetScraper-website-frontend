@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api";
+import CodeEditor from "./CodeEditor";
 
 const CodeComponent = () => {
   const [codeQuestion, setCodeQuestion] = useState(null);
@@ -26,9 +27,7 @@ const CodeComponent = () => {
   return (
     <div>
       <h2 className="text-4xl">{codeQuestion?.question_title}</h2>
-      <p className="pb-20">
-        Code editor goes below here
-      </p>
+        <CodeEditor/>
       <p>
         Notes and youtube suggestions go below here
       </p>
