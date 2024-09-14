@@ -9,7 +9,7 @@ const LanguageSelector = ({ language, onSelect }) => {
       <label className="mb-2 text-lg block">Language:</label>
 
       <Menu>
-        <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+        <MenuButton className="inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 h-[38px]">
           {language}
         </MenuButton>
 
@@ -21,7 +21,7 @@ const LanguageSelector = ({ language, onSelect }) => {
               className={`w-full text-left px-4 py-2 text-sm ${
                 lang === language
                   ? "text-blue-600 bg-blue-100" //
-                  : "text-gray-700 hover:bg-gray-100 hover:text-gray-900" // 
+                  : "text-gray-700 hover:bg-gray-100 hover:text-gray-900" //
               }`}
               onClick={() => onSelect(lang)}
             >

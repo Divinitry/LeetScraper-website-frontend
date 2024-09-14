@@ -21,7 +21,7 @@ const CodeLeft = () => {
 
   return (
     <div>
-      <div className="flex items-center space-x-4">
+      <div className="flex flex-items-center space-x-4">
         <div className="w-1/2">
           <LanguageSelector language={language} onSelect={onSelect} />
           <Editor
