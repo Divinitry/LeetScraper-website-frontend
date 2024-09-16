@@ -3,8 +3,7 @@ import Header from "../components/Header"
 
 function Register() {
     return(
-        <div>
-            <Header/>
+        <div className="min-h-screen flex flex-col justify-center">
             <Form route="/leetscraper/user/register/" method="register"/>
         </div>
     )

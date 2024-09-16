@@ -4,7 +4,6 @@ import Header from "../components/Header"
 const Search = () => {
     return(
         <div>
-            <Header/>
             <SearchComponent/>
         </div>
     )

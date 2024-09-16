@@ -4,7 +4,6 @@ import Header from "../components/Header"
 const ToDoList = () => {
     return(
         <div>
-            <Header/>
             <TDLComponent/>
         </div>
     )

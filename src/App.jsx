@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
+import Layout from "./components/Layout";
 
 function Logout() {
   localStorage.clear();
@@ -25,27 +26,30 @@ function App() {
     <div className="pb-1">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-
-          <Route path="/login" element={<Login />}/>
-          <Route path="/logout" element={<Logout />}/>
-          <Route path="/register" element={<RegisterAndLogout />}/>
+          <Route path="/" element={<Layout><Home /></Layout>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/register" element={<RegisterAndLogout />} />
+          
           <Route path="/search" element={
             <ProtectedRoute>
-              <Search />
+              <Layout><Search /></Layout>
             </ProtectedRoute>
-            } />
+          } />
+          
           <Route path="/todolist" element={
             <ProtectedRoute>
-              <ToDoList />
+              <Layout><ToDoList /></Layout>
             </ProtectedRoute>
-            } />
+          } />
+          
           <Route path="/todolist/code/:id" element={
             <ProtectedRoute>
-              <Code />
+              <Layout><Code /></Layout>
             </ProtectedRoute>
-            } />
-          <Route path="*" element={<NotFound />}/>
+          } />
+
+          <Route path="*" element={<Layout><NotFound /></Layout>} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -22,9 +22,7 @@ const TDLComponent = () => {
 
   const deleteQuestion = async (id) => {
     try {
-      const response = await api.delete(
-        `/leetscraper/todolist/questions/remove/${id}/`
-      );
+      await api.delete(`/leetscraper/todolist/questions/remove/${id}/`);
       setToDoList(toDoList.filter((item) => item.id !== id));
     } catch (error) {
       console.log(error);
@@ -32,24 +30,34 @@ const TDLComponent = () => {
   };
 
   return (
-    <div>
-      <h1>To code list</h1>
+    <div className="min-h-screen flex flex-col items-center bg-black text-white px-4 pt-40">
+      <h1 className="text-4xl mb-8">To Code List</h1>
+
       {toDoList.length > 0 ? (
-        <ul>
+        <ul className="w-full max-w-lg">
           {toDoList.map((codeItem) => (
-            <li key={codeItem.id}>
-              <a href={`/todolist/code/${codeItem.id}`}>
-                <p>{codeItem.question_title}</p>
-                <p>{codeItem.difficulty}</p>
-              </a>
-              <button onClick={() => deleteQuestion(codeItem.id)}>
-                Remove
+            <li key={codeItem.id} className="flex items-center justify-between text-white p-4 mb-4 rounded-lg shadow-lg">
+              <div>
+                <a
+                  href={`/todolist/code/${codeItem.id}`}
+                  className="block text-2xl font-semibold text-white hover:text-gray-400 transition-colors"
+                >
+                  {codeItem.question_title}
+                </a>
+                <p className="text-gray-400">Difficulty: {codeItem.difficulty}</p>
+              </div>
+
+              <button
+                onClick={() => deleteQuestion(codeItem.id)}
+                className="text-gray-400 hover:text-white focus:outline-none"
+              >
+                ✖
               </button>
             </li>
           ))}
         </ul>
       ) : (
-        <p>Add some questions with the search bar!</p>
+        <p className="text-gray-400 text-lg">Add some questions with the search bar!</p>
       )}
     </div>
   );

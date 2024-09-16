@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = () => {
     return (
-        <header className="sticky top-0 left-0 w-full z-50 border-b bg-black" style={{ borderColor: 'hsl(0, 0%, 14.9%)' }}>
+        <header className="fixed top-0 left-0 w-full z-50 border-b bg-black" style={{ borderColor: 'hsl(0, 0%, 14.9%)' }}>
             <div className="container mx-auto flex flex-col lg:flex-row lg:items-center px-4 py-7 relative">
                 <div className="flex items-center justify-start w-full lg:w-auto">
                     <a href="/" className="flex items-center whitespace-nowrap text-2xl font-black text-white">

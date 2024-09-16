@@ -34,7 +34,7 @@ const CodeComponent = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col pt-32">
       <div className="code-question-page">
         <h2 className="text-4xl">{codeQuestion?.question_title}</h2>
         <p className={difficultyColour}>{codeQuestion.difficulty}</p>

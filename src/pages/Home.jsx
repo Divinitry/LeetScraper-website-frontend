@@ -4,7 +4,6 @@ import MainContent from '../components/MainContent';
 const Home = () => {
     return(
         <div>
-            <Header/>
             <MainContent/>
         </div>
     )
