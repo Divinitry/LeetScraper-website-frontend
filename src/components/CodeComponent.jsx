@@ -2,10 +2,15 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api";
 import CodeEditor from "./CodeEditor";
+import Notes from "./Notes";
+import VideoSuggestions from "./VideoSuggestions";
+import Feedback from "./Feedback";
+import CodeHistory from "./CodeHistory";
+import CodeBodyDropDown from "./CodeBodyDropDown";
 
 const CodeComponent = () => {
   const [codeQuestion, setCodeQuestion] = useState(null);
-  const [difficultyColour, setDifficultyColour] = useState("text-green-400")
+  const [difficultyColour, setDifficultyColour] = useState("text-green-400");
   const { id } = useParams();
 
   useEffect(() => {
@@ -34,20 +39,13 @@ const CodeComponent = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col pt-32">
-      <div className="code-question-page">
-        <h2 className="text-4xl">{codeQuestion?.question_title}</h2>
-        <p className={difficultyColour}>{codeQuestion.difficulty}</p>
-        <p>{codeQuestion.topics}</p>
-        <p>{codeQuestion.code_stubs}</p>
-        <div dangerouslySetInnerHTML={{ __html: codeQuestion.hints[0] }} />
-        <div
-          dangerouslySetInnerHTML={{ __html: codeQuestion.body }}
-          className="bg-white/5 py-5 px-5 text-red-"
-        />
-      </div>
+    <div className="min-h-screen flex flex-col pt-24">
+      <CodeBodyDropDown codeQuestion={codeQuestion} difficultyColour={difficultyColour}/>
       <CodeEditor />
-      <p>Notes and youtube suggestions go below here</p>
+      {/* <Feedback codeQuestion={codeQuestion}/>
+      <CodeHistory codeQuestion={codeQuestion}/> */}
+      <Notes id={id}/>
+      {/* <VideoSuggestions codeQuestion={codeQuestion}/> */}
     </div>
   );
 };
