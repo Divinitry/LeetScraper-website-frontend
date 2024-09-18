@@ -95,7 +95,6 @@ const Notes = ({ id }) => {
       {/* Note title and button to add note here */}
 
       <div className="flex flex-row items-center justify-center space-x-3 pb-2 pl-1">
-        <p className="text-3xl">Notes</p>
         <button
           className="bg-transparent hover:bg-white/10 p-1 rounded-full"
           onClick={() => createNote()}
@@ -119,7 +118,7 @@ const Notes = ({ id }) => {
 
       {/* Note itself */}
 
-      <div className="flex flex-row space-x-4 overflow-scroll">
+      <div className="flex flex-row space-x-4 overflow-scroll justify-center">
         {allNotes.length === 0 ? (
           <div className="w-80 h-80 bg-white/5 rounded-md flex justify-center items-center"></div>
         ) : (
@@ -198,7 +197,7 @@ const Notes = ({ id }) => {
 
           <div className="bg-black/90 flex justify-end p-4">
             <button
-              className="bg-blue-500 text-white p-2 rounded"
+              className="bg-white/10 text-white p-2 rounded"
               onClick={saveModalInformation}
             >
               Save
