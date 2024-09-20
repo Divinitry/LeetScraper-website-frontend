@@ -73,6 +73,7 @@ const CodeComponent = () => {
               backgroundColor: "#5d00fc", 
             },
           }}
+          className="border-b" style={{ borderColor: 'hsl(0, 0%, 14.9%)' }}
         >
           <Tab icon={<FeedbackIcon />} label="Feedback" />
           <Tab icon={<HistoryIcon />} label="History / Progression" />
@@ -110,7 +111,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          {children}  
         </Box>
       )}
     </div>

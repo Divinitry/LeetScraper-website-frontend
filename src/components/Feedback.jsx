@@ -4,7 +4,7 @@ const Feedback = ({codeQuestion}) => {
     return (
         <div>
             ChatGPT api ai response goes here
-        </div>
+        </div>  
     )
 }
 

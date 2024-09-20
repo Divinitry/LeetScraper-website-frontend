@@ -91,7 +91,6 @@ const Notes = ({ id }) => {
 
   return (
     <div>
-
       {/* Note title and button to add note here */}
 
       <div className="flex flex-row items-center justify-center space-x-3 pb-2 pl-1">
@@ -171,12 +170,12 @@ const Notes = ({ id }) => {
         >
           <div className="bg-black/90 border-b-0 flex justify-between items-center p-4">
             <input
-              className="bg-transparent border-none text-white focus:ring-0"
+              className="bg-transparent border-none text-white focus:ring-0 flex-grow mr-4"
               type="text"
               value={selectedNote.title}
               onChange={handleTitleChange}
+              maxLength={50}
             />
-
             <button
               className="text-white p-3"
               onClick={() => setOpenModal(false)}
