@@ -12,11 +12,22 @@ const CodeLeft = () => {
   const onMount = (editor) => {
     editorRef.current = editor;
     editor.focus();
+    if(localStorage.getItem("code")){
+      setValue(localStorage.getItem("code"))
+    } else{
+      setValue("")
+    }
   };
 
   const onSelect = (language) => {
     setLanguage(language);
     setValue(CODE_SNIPPETS[language]);
+  };
+
+  const saveCodeToLocalStorage = (code) => {
+    if (code) {
+      localStorage.setItem("code", code);
+    }
   };
 
   return (
@@ -31,7 +42,7 @@ const CodeLeft = () => {
             defaultValue={CODE_SNIPPETS[language]}
             value={value}
             onMount={onMount}
-            onChange={(value) => setValue(value)}
+            onChange={(value) => {setValue(value); saveCodeToLocalStorage(value)}}
           />
         </div>
         <Output editorRef={editorRef} language={language}/>
