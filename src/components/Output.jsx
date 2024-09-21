@@ -2,13 +2,13 @@ import { executeCode } from "../pistionapi";
 import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 
-const Output = ({ editorRef, language }) => {
+const Output = ({ editorRef, language, setCurrentCode, currentCode }) => {
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
   const runCode = async () => {
-    const sourceCode = editorRef.current.getValue();
+    const sourceCode = editorRef.current.getValue().trim();
     if (!sourceCode) {
       toast.error("No code to execute.");
       return;
@@ -33,10 +33,11 @@ const Output = ({ editorRef, language }) => {
     } finally {
       setIsLoading(false);
     }
+    setCurrentCode(sourceCode);
   };
 
   return (
-    <div className="w-1/2">
+    <div className="w-1/2 relative">
       <p className="mb-2 text-lg">Output</p>
       <button
         className={`mb-4 inline-flex justify-center gap-x-1.5 rounded-md bg-transparent px-3 py-2 text-sm font-semibold border border-purple-800 shadow-sm ring-1 ring-inset ring-purple-600 hover:bg-white/5 h-[38px] ${
@@ -82,6 +83,17 @@ const Output = ({ editorRef, language }) => {
       </div>
 
       <Toaster />
+
+      {/* USE USECONTEXT TO SEND GET THE FUNCTION FROM GET CHATGPT FEEDBACK AND PASS IT IN HERE AS PROP AND SEND CURRENTCODE AS THE ARGUMENT */}
+      {
+        currentCode && (
+      <div className="absolute left-1/2 transform -translate-x-1/2">
+        <button className="bg-emerald-500 p-1">
+          Request Feedback
+        </button>
+      </div>
+        )
+      }
     </div>
   );
 };

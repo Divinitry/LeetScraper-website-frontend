@@ -17,6 +17,7 @@ const CodeComponent = () => {
   const [codeQuestion, setCodeQuestion] = useState(null);
   const [difficultyColour, setDifficultyColour] = useState("text-green-400");
   const [tabValue, setTabValue] = useState(0);
+  const [currentCode, setCurrentCode] = useState("")
   const { id } = useParams();
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const CodeComponent = () => {
         codeQuestion={codeQuestion}
         difficultyColour={difficultyColour}
       />
-      <CodeEditor />
+      <CodeEditor setCurrentCode={setCurrentCode} currentCode={currentCode}/>
 
       <Box >
         <Tabs

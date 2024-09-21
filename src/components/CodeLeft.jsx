@@ -4,7 +4,7 @@ import LanguageSelector from "./LanguageSelector";
 import { CODE_SNIPPETS } from "../constants";
 import Output from "./Output";
 
-const CodeLeft = () => {
+const CodeLeft = ({setCurrentCode, currentCode}) => {
   const editorRef = useRef();
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("javascript");
@@ -45,7 +45,7 @@ const CodeLeft = () => {
             onChange={(value) => {setValue(value); saveCodeToLocalStorage(value)}}
           />
         </div>
-        <Output editorRef={editorRef} language={language}/>
+        <Output editorRef={editorRef} language={language} setCurrentCode={setCurrentCode} currentCode={currentCode}/>
       </div>
     </div>
   );
