@@ -1,23 +1,24 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Editor } from "@monaco-editor/react";
 import LanguageSelector from "./LanguageSelector";
 import { CODE_SNIPPETS } from "../constants";
 import Output from "./Output";
 
-const CodeLeft = ({setCurrentCode, currentCode}) => {
+const CodeLeft = ({ questionTitle }) => {
   const editorRef = useRef();
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("javascript");
 
-  const onMount = (editor) => {
-    editorRef.current = editor;
-    editor.focus();
-    if(localStorage.getItem("code")){
-      setValue(localStorage.getItem("code"))
-    } else{
-      setValue("")
+  const localStorageKey = `code_${questionTitle}`; 
+
+  useEffect(() => {
+    const savedCode = localStorage.getItem(localStorageKey);
+    if (savedCode) {
+      setValue(savedCode);
+    } else {
+      setValue(CODE_SNIPPETS[language]); 
     }
-  };
+  }, [questionTitle, language, localStorageKey]);
 
   const onSelect = (language) => {
     setLanguage(language);
@@ -26,7 +27,7 @@ const CodeLeft = ({setCurrentCode, currentCode}) => {
 
   const saveCodeToLocalStorage = (code) => {
     if (code) {
-      localStorage.setItem("code", code);
+      localStorage.setItem(localStorageKey, code);
     }
   };
 
@@ -39,13 +40,18 @@ const CodeLeft = ({setCurrentCode, currentCode}) => {
             height="60vh"
             theme="vs-dark"
             language={language}
-            defaultValue={CODE_SNIPPETS[language]}
             value={value}
-            onMount={onMount}
-            onChange={(value) => {setValue(value); saveCodeToLocalStorage(value)}}
+            onMount={(editor) => {
+              editorRef.current = editor;
+              editor.focus();
+            }}
+            onChange={(value) => {
+              setValue(value);
+              saveCodeToLocalStorage(value);
+            }}
           />
         </div>
-        <Output editorRef={editorRef} language={language} setCurrentCode={setCurrentCode} currentCode={currentCode}/>
+        <Output editorRef={editorRef} language={language} />
       </div>
     </div>
   );

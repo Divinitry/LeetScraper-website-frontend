@@ -2,10 +2,11 @@ import { executeCode } from "../pistionapi";
 import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 
-const Output = ({ editorRef, language, setCurrentCode, currentCode }) => {
+const Output = ({ editorRef, language }) => {
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [currentCode, setCurrentCode] = useState("")
 
   const runCode = async () => {
     const sourceCode = editorRef.current.getValue().trim();
@@ -35,6 +36,22 @@ const Output = ({ editorRef, language, setCurrentCode, currentCode }) => {
     }
     setCurrentCode(sourceCode);
   };
+
+
+
+// This will be an api call, set up chatgpt api in the backend to amke it more secure
+
+  const sendToChatGptAPI = async () => {
+    
+  }
+
+
+
+
+
+
+
+
 
   return (
     <div className="w-1/2 relative">
@@ -84,11 +101,10 @@ const Output = ({ editorRef, language, setCurrentCode, currentCode }) => {
 
       <Toaster />
 
-      {/* USE USECONTEXT TO SEND GET THE FUNCTION FROM GET CHATGPT FEEDBACK AND PASS IT IN HERE AS PROP AND SEND CURRENTCODE AS THE ARGUMENT */}
       {
         currentCode && (
       <div className="absolute left-1/2 transform -translate-x-1/2">
-        <button className="bg-emerald-500 p-1">
+        <button className="bg-emerald-500 p-1" onClick={() => sendToChatGptAPI(currentCode)}>
           Request Feedback
         </button>
       </div>
