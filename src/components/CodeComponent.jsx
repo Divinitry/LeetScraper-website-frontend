@@ -56,7 +56,7 @@ const CodeComponent = () => {
         codeQuestion={codeQuestion}
         difficultyColour={difficultyColour}
       />
-      <CodeEditor questionTitle={codeQuestion.question_title}/>
+      <CodeEditor questionTitle={codeQuestion.question_title} codeQuestion={codeQuestion}/>
 
       <Box >
         <Tabs
@@ -85,7 +85,7 @@ const CodeComponent = () => {
         </Tabs>
 
         <TabPanel value={tabValue} index={0}>
-          <Feedback codeQuestion={codeQuestion} />
+          <Feedback />
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
           <CodeHistory codeQuestion={codeQuestion} />

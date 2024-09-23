@@ -1,10 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Editor } from "@monaco-editor/react";
 import LanguageSelector from "./LanguageSelector";
-import { CODE_SNIPPETS } from "../constants";
 import Output from "./Output";
 
-const CodeLeft = ({ questionTitle }) => {
+const CodeLeft = ({ questionTitle, codeQuestion }) => {
   const editorRef = useRef();
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("javascript");
@@ -15,14 +14,11 @@ const CodeLeft = ({ questionTitle }) => {
     const savedCode = localStorage.getItem(localStorageKey);
     if (savedCode) {
       setValue(savedCode);
-    } else {
-      setValue(CODE_SNIPPETS[language]); 
     }
   }, [questionTitle, language, localStorageKey]);
 
   const onSelect = (language) => {
     setLanguage(language);
-    setValue(CODE_SNIPPETS[language]);
   };
 
   const saveCodeToLocalStorage = (code) => {
@@ -37,7 +33,7 @@ const CodeLeft = ({ questionTitle }) => {
         <div className="w-1/2">
           <LanguageSelector language={language} onSelect={onSelect} />
           <Editor
-            height="60vh"
+            height="72vh"
             theme="vs-dark"
             language={language}
             value={value}
@@ -51,7 +47,7 @@ const CodeLeft = ({ questionTitle }) => {
             }}
           />
         </div>
-        <Output editorRef={editorRef} language={language} />
+        <Output editorRef={editorRef} language={language} codeQuestion={codeQuestion} />
       </div>
     </div>
   );

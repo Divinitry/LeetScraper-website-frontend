@@ -3,7 +3,7 @@ import { ReactSketchCanvas } from "react-sketch-canvas";
 
 function WhiteBoard() {
   const canvasRef = useRef(null);
-  const [strokeColor, setStrokeColor] = useState("#FFFF");
+  const [strokeColor, setStrokeColor] = useState("black");
 
   const handleColorChange = (event) => {
     setStrokeColor(event.target.value);
@@ -17,14 +17,14 @@ function WhiteBoard() {
 
   return (
     <div className="relative flex flex-col p-4 space-y-6 h-full">
-      <div className="flex-grow border-4 border-gray-500 rounded-md">
+      <div className="flex-grow border-4 border-gray-300 rounded-lg shadow-lg bg-white">
         <ReactSketchCanvas
           ref={canvasRef}
           className="w-full"
           height="400px"
-          canvasColor="transparent"
+          canvasColor="white"
           strokeColor={strokeColor}
-          strokeWidth={4}
+          strokeWidth={3}
         />
       </div>
 
@@ -43,12 +43,17 @@ function WhiteBoard() {
             viewBox="0 0 24 24"
             fill={strokeColor}
             className="w-6 h-6"
+            stroke="black"
+            strokeWidth="1"
           >
             <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
           </svg>
         </label>
 
-        <button onClick={handleClearClick} className="text-red-700 rounded hover:text-red-800">
+        <button
+          onClick={handleClearClick}
+          className="text-red-700 rounded hover:text-red-800"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

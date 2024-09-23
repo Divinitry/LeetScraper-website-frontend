@@ -1,8 +1,9 @@
 import { executeCode } from "../pistionapi";
 import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
+import api from "../api";
 
-const Output = ({ editorRef, language }) => {
+const Output = ({ editorRef, language, codeQuestion }) => {
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -37,21 +38,21 @@ const Output = ({ editorRef, language }) => {
     setCurrentCode(sourceCode);
   };
 
-
-
-// This will be an api call, set up chatgpt api in the backend to amke it more secure
-
   const sendToChatGptAPI = async () => {
-    
+    try{
+      const bodyObject = {
+        question_title: codeQuestion.question_title,
+        question_topics: codeQuestion.topics,
+        user_code: currentCode
+      }
+      const response = await api.post('/leetscraper/api/chatgptapi/', bodyObject);
+
+      console.log('Feedback:', response.data.feedback);
+      console.log('Rating:', response.data.rating);
+    }catch(error){
+      console.log('Error sending message to ChatGPT API:', error)
+    }
   }
-
-
-
-
-
-
-
-
 
   return (
     <div className="w-1/2 relative">
@@ -90,7 +91,7 @@ const Output = ({ editorRef, language }) => {
       </button>
 
       <div
-        className={`h-[60vh] p-2 rounded-[4px] outline ${
+        className={`h-[72vh] overflow-scroll p-2 rounded-[4px] outline ${
           isError ? "text-red-600 border-red-600" : "border-gray-800"
         }`}
       >
