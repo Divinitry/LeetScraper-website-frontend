@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import api from "../api";
 
-const Output = ({ editorRef, language, codeQuestion, setFeedback }) => {
+const Output = ({ editorRef, language, codeQuestion, setFeedback, setUserCode }) => {
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -40,6 +40,8 @@ const Output = ({ editorRef, language, codeQuestion, setFeedback }) => {
 
   const sendToChatGptAPI = async () => {
     try{
+      setUserCode(currentCode)
+
       const bodyObject = {
         question_title: codeQuestion.question_title,
         question_topics: codeQuestion.topics,
