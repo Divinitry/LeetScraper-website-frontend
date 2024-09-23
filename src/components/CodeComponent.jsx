@@ -19,6 +19,7 @@ const CodeComponent = () => {
   const [codeQuestion, setCodeQuestion] = useState(null);
   const [difficultyColour, setDifficultyColour] = useState("text-green-400");
   const [tabValue, setTabValue] = useState(0);
+  const [feedback, setFeedback] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const CodeComponent = () => {
         codeQuestion={codeQuestion}
         difficultyColour={difficultyColour}
       />
-      <CodeEditor questionTitle={codeQuestion.question_title} codeQuestion={codeQuestion}/>
+      <CodeEditor questionTitle={codeQuestion.question_title} codeQuestion={codeQuestion} setFeedback={setFeedback}/>
 
       <Box >
         <Tabs
@@ -85,7 +86,7 @@ const CodeComponent = () => {
         </Tabs>
 
         <TabPanel value={tabValue} index={0}>
-          <Feedback />
+          <Feedback feedback={feedback}/>
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
           <CodeHistory codeQuestion={codeQuestion} />

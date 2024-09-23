@@ -3,27 +3,31 @@ import { Editor } from "@monaco-editor/react";
 import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
 
-const CodeLeft = ({ questionTitle, codeQuestion }) => {
+const CodeLeft = ({ questionTitle, codeQuestion, setFeedback }) => {
   const editorRef = useRef();
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("javascript");
 
-  const localStorageKey = `code_${questionTitle}`; 
+  const codeLocalStorageKey = `code_${questionTitle}`; 
+  const languageLocalStorageKey = `language_${questionTitle}`
 
   useEffect(() => {
-    const savedCode = localStorage.getItem(localStorageKey);
+    const savedCode = localStorage.getItem(codeLocalStorageKey);
     if (savedCode) {
       setValue(savedCode);
     }
-  }, [questionTitle, language, localStorageKey]);
+    const savedLanguage = localStorage.getItem(languageLocalStorageKey)
+    setLanguage(savedLanguage)
+  }, [questionTitle, language, codeLocalStorageKey, languageLocalStorageKey]);
 
   const onSelect = (language) => {
     setLanguage(language);
+    localStorage.setItem(languageLocalStorageKey, language)
   };
 
   const saveCodeToLocalStorage = (code) => {
     if (code) {
-      localStorage.setItem(localStorageKey, code);
+      localStorage.setItem(codeLocalStorageKey, code);
     }
   };
 
@@ -47,7 +51,7 @@ const CodeLeft = ({ questionTitle, codeQuestion }) => {
             }}
           />
         </div>
-        <Output editorRef={editorRef} language={language} codeQuestion={codeQuestion} />
+        <Output editorRef={editorRef} language={language} codeQuestion={codeQuestion} setFeedback={setFeedback}/>
       </div>
     </div>
   );

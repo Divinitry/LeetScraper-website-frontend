@@ -1,9 +1,14 @@
 import { useState } from "react"
 
-const Feedback = ({codeQuestion}) => {
+const Feedback = ({codeQuestion, feedback}) => {
     return (
         <div>
-            ChatGPT api ai response goes here
+            <p>
+                {feedback && feedback.feedback}
+            </p>
+            <p>
+                {feedback ? `Rating: ${feedback.rating}` : 'rating goes here'}
+            </p>
         </div>  
     )
 }

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import api from "../api";
 
-const Output = ({ editorRef, language, codeQuestion }) => {
+const Output = ({ editorRef, language, codeQuestion, setFeedback }) => {
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -46,6 +46,7 @@ const Output = ({ editorRef, language, codeQuestion }) => {
         user_code: currentCode
       }
       const response = await api.post('/leetscraper/api/chatgptapi/', bodyObject);
+      setFeedback(response.data)
 
       console.log('Feedback:', response.data.feedback);
       console.log('Rating:', response.data.rating);
