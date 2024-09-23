@@ -23,7 +23,7 @@
   }
   
   code {
-    @apply bg-white/10 text-white/75 p-1 rounded font-mono text-sm;
+    @apply bg-white/10 text-white/75 p-1 rounded font-mono text-sm leading-loose outline outline-[1px] outline-white/30;
   }
 }
 
