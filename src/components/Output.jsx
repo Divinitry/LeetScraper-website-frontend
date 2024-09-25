@@ -3,11 +3,19 @@ import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import api from "../api";
 
-const Output = ({ editorRef, language, codeQuestion, setFeedback, setUserCode }) => {
+const Output = ({
+  editorRef,
+  language,
+  codeQuestion,
+  setFeedback,
+  setUserCode,
+  id,
+  userCode
+}) => {
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [currentCode, setCurrentCode] = useState("")
+  const [currentCode, setCurrentCode] = useState("");
 
   const runCode = async () => {
     const sourceCode = editorRef.current.getValue().trim();
@@ -38,24 +46,44 @@ const Output = ({ editorRef, language, codeQuestion, setFeedback, setUserCode })
     setCurrentCode(sourceCode);
   };
 
-  const sendToChatGptAPI = async () => {
-    try{
-      setUserCode(currentCode)
-
+  const handleSave = async () => {
+    try {
+      setUserCode(currentCode);
+  
       const bodyObject = {
         question_title: codeQuestion.question_title,
         question_topics: codeQuestion.topics,
-        user_code: currentCode
-      }
-      const response = await api.post('/leetscraper/api/chatgptapi/', bodyObject);
-      setFeedback(response.data)
+        user_code: currentCode,
+      };
 
-      console.log('Feedback:', response.data.feedback);
-      console.log('Rating:', response.data.rating);
-    }catch(error){
-      console.log('Error sending message to ChatGPT API:', error)
+      const response = await api.post("/leetscraper/api/chatgptapi/", bodyObject);
+
+      const feedbackData = response.data;
+  
+      const codeObject = {
+        code: currentCode, 
+        chatgpt_response: feedbackData.feedback, 
+        ratings: feedbackData.rating,
+      };
+
+      if(codeObject.chatgpt_response === "Nice code, but it seems unrelated to the question."){
+        return
+      } else{
+        await api.post(
+          `/leetscraper/todolist/questions/${id}/codesolutions/create/`,
+          codeObject
+        );
+      }
+      
+      setFeedback(feedbackData);
+      
+      console.log("Feedback:", feedbackData.feedback);
+      console.log("Rating:", feedbackData.rating);
+    } catch (error) {
+      console.log("Error in handleSave:", error);
     }
-  }
+  };
+  
 
   return (
     <div className="w-1/2 relative">
@@ -105,15 +133,18 @@ const Output = ({ editorRef, language, codeQuestion, setFeedback, setUserCode })
 
       <Toaster />
 
-      {
-        currentCode && (
-      <div className="absolute left-1/2 transform -translate-x-1/2">
-        <button className="bg-emerald-500 p-1" onClick={() => sendToChatGptAPI(currentCode)}>
-          Request Feedback
-        </button>
-      </div>
-        )
-      }
+      {currentCode && (
+        <div className="absolute left-1/2 transform -translate-x-1/2">
+          <button
+            className="bg-emerald-500 p-1"
+            onClick={() => {
+              handleSave(currentCode)
+            }}
+          >
+            Save
+          </button>
+        </div>
+      )}
     </div>
   );
 };

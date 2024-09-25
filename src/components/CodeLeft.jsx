@@ -3,7 +3,7 @@ import { Editor } from "@monaco-editor/react";
 import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
 
-const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode }) => {
+const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, userCode }) => {
   const editorRef = useRef();
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("javascript");
@@ -51,7 +51,7 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode }) => 
             }}
           />
         </div>
-        <Output editorRef={editorRef} language={language} codeQuestion={codeQuestion} setFeedback={setFeedback} setUserCode={setUserCode}/>
+        <Output editorRef={editorRef} language={language} codeQuestion={codeQuestion} setFeedback={setFeedback} userCode={userCode} setUserCode={setUserCode} id={id}/>
       </div>
     </div>
   );

@@ -58,7 +58,7 @@ const CodeComponent = () => {
         codeQuestion={codeQuestion}
         difficultyColour={difficultyColour}
       />
-      <CodeEditor questionTitle={codeQuestion.question_title} codeQuestion={codeQuestion} setFeedback={setFeedback} setUserCode={setUserCode}/>
+      <CodeEditor questionTitle={codeQuestion.question_title} codeQuestion={codeQuestion} setFeedback={setFeedback} userCode={userCode} setUserCode={setUserCode} id={id}/>
 
       <Box >
         <Tabs
