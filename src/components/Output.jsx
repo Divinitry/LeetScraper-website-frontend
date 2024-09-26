@@ -30,10 +30,9 @@ const Output = ({
       setOutput(result.output.split("\n"));
       result.stderr ? setIsError(true) : setIsError(false);
     } catch (error) {
-      console.error(error);
-      console.log("Error response:", error.response);
+      console.error("Error during code execution:", error);
       const errorMessage =
-        error.response?.data?.message || "An error occurred.";
+        error.response?.data?.message || "An error occurred during code execution.";
 
       toast.error(errorMessage, {
         duration: 6000,
@@ -49,41 +48,45 @@ const Output = ({
   const handleSave = async () => {
     try {
       setUserCode(currentCode);
-  
+
       const bodyObject = {
         question_title: codeQuestion.question_title,
         question_topics: codeQuestion.topics,
         user_code: currentCode,
       };
 
-      const response = await api.post("/leetscraper/api/chatgptapi/", bodyObject);
+      const response = await api.post("/leetscraper/api/chatgptapi/feedback", bodyObject);
 
       const feedbackData = response.data;
-  
+
       const codeObject = {
-        code: currentCode, 
-        chatgpt_response: feedbackData.feedback, 
-        ratings: feedbackData.rating,
+        code: currentCode,
+        chatgpt_response: feedbackData.feedback || "No feedback available",
+        ratings: feedbackData.rating || 0,
       };
 
-      if(codeObject.chatgpt_response === "Nice code, but it seems unrelated to the question."){
-        return
-      } else{
-        await api.post(
-          `/leetscraper/todolist/questions/${id}/codesolutions/create/`,
-          codeObject
-        );
+      if (codeObject.chatgpt_response === "Nice code, but it seems unrelated to the question.") {
+        toast("The code seems unrelated to the question, but it will still be saved.", {
+          icon: "⚠️",
+          style: {
+            background: '#fbbf24',  
+            color: '#fff',
+          },
+        });
       }
-      
+
+      await api.post(`/leetscraper/todolist/questions/${id}/codesolutions/create/`, codeObject);
+
       setFeedback(feedbackData);
       
       console.log("Feedback:", feedbackData.feedback);
       console.log("Rating:", feedbackData.rating);
+      toast.success("Code saved successfully!");
     } catch (error) {
       console.log("Error in handleSave:", error);
+      toast.error("Failed to save the code.");
     }
   };
-  
 
   return (
     <div className="w-1/2 relative">
@@ -133,13 +136,11 @@ const Output = ({
 
       <Toaster />
 
-      {currentCode && (
+      {currentCode && output && (
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <button
             className="bg-emerald-500 p-1"
-            onClick={() => {
-              handleSave(currentCode)
-            }}
+            onClick={handleSave}
           >
             Save
           </button>
