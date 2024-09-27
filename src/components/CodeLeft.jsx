@@ -9,6 +9,7 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("Select Language");
   const [languageStarterCode, setLanguageStarterCode] = useState(null);
+  const [manualClear, setManualClear] = useState(false);
 
   const codeLocalStorageKey = `code_${questionTitle}`; 
   const languageLocalStorageKey = `language_${questionTitle}`;
@@ -16,12 +17,16 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
 
   useEffect(() => {
     const savedCode = localStorage.getItem(codeLocalStorageKey);
-    if (savedCode) {
-      setValue(savedCode);
-    }
     const savedLanguage = localStorage.getItem(languageLocalStorageKey);
+
     if (savedLanguage) {
       setLanguage(savedLanguage);
+    }
+
+    if (savedCode !== null) {
+      setValue(savedCode);
+    } else if (codeQuestion) {
+      getStarterCode();
     }
   }, [questionTitle, codeLocalStorageKey, languageLocalStorageKey]);
 
@@ -29,7 +34,7 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
     setLanguage(newLanguage);
     localStorage.setItem(languageLocalStorageKey, newLanguage);
     
-    if (languageStarterCode && languageStarterCode[newLanguage]) {
+    if (!manualClear && languageStarterCode && languageStarterCode[newLanguage]) {
       setValue(languageStarterCode[newLanguage]);
     }
   };
@@ -40,40 +45,39 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
     }
   };
 
-  useEffect(() => {
-    const getStarterCode = async () => {
-      try {
-        const leetcode_body = { body: codeQuestion.body };
-        const response = await api.post(`/leetscraper/api/chatgptapi/startercode`, leetcode_body);
-        const data = response.data;
+  const getStarterCode = async () => {
+    try {
+      const leetcode_body = { body: codeQuestion.body };
+      const response = await api.post(`/leetscraper/api/chatgptapi/startercode`, leetcode_body);
+      const data = response.data;
 
-        const starterCode = {
-          javascript: data.javascript_starter_code,
-          typescript: data.typescript_starter_code,
-          python: data.python_starter_code,
-          java: data.java_starter_code,
-          csharp: data.csharp_starter_code,
-        };
+      const starterCode = {
+        javascript: data.javascript_starter_code,
+        typescript: data.typescript_starter_code,
+        python: data.python_starter_code,
+        java: data.java_starter_code,
+        csharp: data.csharp_starter_code,
+      };
 
-        localStorage.setItem(starterCodeLocalStorageKey, JSON.stringify(starterCode));
+      localStorage.setItem(starterCodeLocalStorageKey, JSON.stringify(starterCode));
+      setLanguageStarterCode(starterCode);
 
-        setLanguageStarterCode(starterCode);
+      const savedCode = localStorage.getItem(codeLocalStorageKey);
 
+      if (!savedCode) {
         setValue(starterCode[language]);
-      } catch (error) {
-        console.log(error);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
     const cachedStarterCode = localStorage.getItem(starterCodeLocalStorageKey);
-
+    
     if (cachedStarterCode) {
       const parsedCode = JSON.parse(cachedStarterCode);
       setLanguageStarterCode(parsedCode);
-
-      setValue(parsedCode[language]);
-    } else if (codeQuestion) {
-      getStarterCode();
     }
   }, [codeQuestion]);
 
@@ -86,14 +90,18 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
             height="72vh"
             theme="vs-dark"
             language={language}
-            value={value || languageStarterCode?.[language] || ""} 
+            value={value || ""}
             onMount={(editor) => {
               editorRef.current = editor;
               editor.focus();
             }}
-            onChange={(value) => {
-              setValue(value);
-              saveCodeToLocalStorage(value);
+            onChange={(newValue) => {
+              setValue(newValue);
+              saveCodeToLocalStorage(newValue);
+
+              if (newValue === "") {
+                setManualClear(true);
+              }
             }}
           />
         </div>
