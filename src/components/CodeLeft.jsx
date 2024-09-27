@@ -81,7 +81,7 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
     <div>
       <div className="flex flex-items-center space-x-4">
         <div className="w-1/2">
-          <LanguageSelector language={language} onSelect={onSelect} />
+          <LanguageSelector language={language} onSelect={onSelect} questionTitle={questionTitle}/>
           <Editor
             height="72vh"
             theme="vs-dark"
