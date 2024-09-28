@@ -9,7 +9,6 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("Select Language");
   const [languageStarterCode, setLanguageStarterCode] = useState(null);
-  const [manualClear, setManualClear] = useState(false);
 
   const javascriptCodeLocalStorageKey = `javascriptcode_${questionTitle}`;
   const typescriptCodeLocalStorageKey = `typescriptcode_${questionTitle}`;
@@ -25,24 +24,29 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
     typescript: typescriptCodeLocalStorageKey,
     python: pythonCodeLocalStorageKey,
     java: javaCodeLocalStorageKey,
-    csharp: csharpCodeLocalStorageKey
-  }
+    csharp: csharpCodeLocalStorageKey,
+  };
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem(languageLocalStorageKey);
-
+    const cachedStarterCode = localStorage.getItem(starterCodeLocalStorageKey);
+    
     if (savedLanguage) {
       setLanguage(savedLanguage);
     }
 
     const savedCode = localStorage.getItem(languagesHashMap[savedLanguage]);
 
-    if (savedCode !== null) {
+    if (savedCode && savedCode.trim() !== "") {
       setValue(savedCode);
+    } else if (cachedStarterCode) {
+      const starterCode = JSON.parse(cachedStarterCode);
+      setLanguageStarterCode(starterCode);
+      setValue(starterCode[savedLanguage] || "");
     } else if (codeQuestion) {
-      getStarterCode();
+      getStarterCode(savedLanguage || language);
     }
-  }, [questionTitle, languageLocalStorageKey]);
+  }, [questionTitle, language]);
 
   const onSelect = (newLanguage) => {
     setLanguage(newLanguage);
@@ -51,7 +55,7 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
     const currentLanguageKey = languagesHashMap[newLanguage];
     const savedCode = localStorage.getItem(currentLanguageKey);
 
-    if (!manualClear && savedCode) {
+    if (savedCode) {
       setValue(savedCode);
     } else if (languageStarterCode && languageStarterCode[newLanguage]) {
       setValue(languageStarterCode[newLanguage]);
@@ -65,7 +69,7 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
     }
   };
 
-  const getStarterCode = async () => {
+  const getStarterCode = async (lang) => {
     try {
       const leetcode_body = { body: codeQuestion.body };
       const response = await api.post(`/leetscraper/api/chatgptapi/startercode`, leetcode_body);
@@ -82,24 +86,14 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
       localStorage.setItem(starterCodeLocalStorageKey, JSON.stringify(starterCode));
       setLanguageStarterCode(starterCode);
 
-      const savedCode = localStorage.getItem(languagesHashMap[language]);
-
-      if (!savedCode) {
-        setValue(starterCode[language]);
+      const savedCode = localStorage.getItem(languagesHashMap[lang]);
+      if (!savedCode || savedCode.trim() === "") {
+        setValue(starterCode[lang]);
       }
     } catch (error) {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    const cachedStarterCode = localStorage.getItem(starterCodeLocalStorageKey);
-    
-    if (cachedStarterCode) {
-      const parsedCode = JSON.parse(cachedStarterCode);
-      setLanguageStarterCode(parsedCode);
-    }
-  }, [codeQuestion]);
 
   return (
     <div>
@@ -118,10 +112,6 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
             onChange={(newValue) => {
               setValue(newValue);
               saveCodeToLocalStorage(newValue);
-
-              if (newValue === "") {
-                setManualClear(true);
-              }
             }}
           />
         </div>

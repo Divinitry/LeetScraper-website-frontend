@@ -10,7 +10,7 @@ const Output = ({
   setFeedback,
   setUserCode,
   id,
-  userCode
+  userCode,
 }) => {
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +32,8 @@ const Output = ({
     } catch (error) {
       console.error("Error during code execution:", error);
       const errorMessage =
-        error.response?.data?.message || "An error occurred during code execution.";
+        error.response?.data?.message ||
+        "An error occurred during code execution.";
 
       toast.error(errorMessage, {
         duration: 6000,
@@ -55,7 +56,10 @@ const Output = ({
         user_code: currentCode,
       };
 
-      const response = await api.post("/leetscraper/api/chatgptapi/feedback", bodyObject);
+      const response = await api.post(
+        "/leetscraper/api/chatgptapi/feedback",
+        bodyObject
+      );
 
       const feedbackData = response.data;
 
@@ -65,20 +69,29 @@ const Output = ({
         ratings: feedbackData.rating || 0,
       };
 
-      if (codeObject.chatgpt_response === "Nice code, but it seems unrelated to the question.") {
-        toast("The code seems unrelated to the question, but it will still be saved.", {
-          icon: "⚠️",
-          style: {
-            background: '#fbbf24',  
-            color: '#fff',
-          },
-        });
+      if (
+        codeObject.chatgpt_response ===
+        "Nice code, but it seems unrelated to the question."
+      ) {
+        toast(
+          "The code seems unrelated to the question, but it will still be saved.",
+          {
+            icon: "⚠️",
+            style: {
+              background: "#fbbf24",
+              color: "#fff",
+            },
+          }
+        );
       }
 
-      await api.post(`/leetscraper/todolist/questions/${id}/codesolutions/create/`, codeObject);
+      await api.post(
+        `/leetscraper/todolist/questions/${id}/codesolutions/create/`,
+        codeObject
+      );
 
       setFeedback(feedbackData);
-      
+
       console.log("Feedback:", feedbackData.feedback);
       console.log("Rating:", feedbackData.rating);
       toast.success("Code saved successfully!");
@@ -92,7 +105,7 @@ const Output = ({
     <div className="w-1/2 relative">
       <p className="mb-2 text-lg">Output</p>
       <button
-        className={`mb-4 inline-flex justify-center gap-x-1.5 rounded-md bg-transparent px-3 py-2 text-sm font-semibold border border-purple-800 shadow-sm ring-1 ring-inset ring-purple-600 hover:bg-white/5 h-[38px] ${
+        className={`mb-4 inline-flex justify-center gap-x-1.5 rounded-md bg-transparent px-3 py-2 text-sm font-semibold border shadow-sm ring-1 ring-inset hover:bg-white/5 h-[38px] ${
           isLoading ? "cursor-not-allowed opacity-50" : "text-white"
         }`}
         onClick={runCode}
@@ -125,24 +138,23 @@ const Output = ({
       </button>
 
       <div
-        className={`h-[72vh] overflow-scroll p-2 rounded-[4px] outline ${
-          isError ? "text-red-600 border-red-600" : "border-gray-800"
-        }`}
+        className={`h-[72vh] overflow-scroll p-2 rounded-[4px] outline bg-gray-900 ${
+          isError ? "text-red-600 border-red-600" : "outline-gray-800"
+        } flex justify-center items-center`}
       >
-        {output
-          ? output.map((line, index) => <p key={index}>{line}</p>)
-          : 'Click "Run Code" to see the output here'}
+        {output ? (
+          output.map((line, index) => <p key={index}>{line}</p>)
+        ) : (
+          <p className="text-gray-500">You must run your code first</p>
+        )}
       </div>
 
       <Toaster />
 
       {currentCode && output && (
         <div className="absolute left-1/2 transform -translate-x-1/2">
-          <button
-            className="bg-emerald-500 p-1"
-            onClick={handleSave}
-          >
-            Save
+          <button className="bg-emerald-500 p-1" onClick={handleSave}>
+            Get feedback
           </button>
         </div>
       )}
