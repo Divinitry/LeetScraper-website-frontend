@@ -11,37 +11,57 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
   const [languageStarterCode, setLanguageStarterCode] = useState(null);
   const [manualClear, setManualClear] = useState(false);
 
-  const codeLocalStorageKey = `code_${questionTitle}`; 
+  const javascriptCodeLocalStorageKey = `javascriptcode_${questionTitle}`;
+  const typescriptCodeLocalStorageKey = `typescriptcode_${questionTitle}`;
+  const pythonCodeLocalStorageKey = `pythoncode_${questionTitle}`;
+  const javaCodeLocalStorageKey = `javacode_${questionTitle}`;
+  const csharpCodeLocalStorageKey = `csharpcode_${questionTitle}`;
+
   const languageLocalStorageKey = `language_${questionTitle}`;
   const starterCodeLocalStorageKey = `starter_code_${questionTitle}`;
 
+  const languagesHashMap = {
+    javascript: javascriptCodeLocalStorageKey,
+    typescript: typescriptCodeLocalStorageKey,
+    python: pythonCodeLocalStorageKey,
+    java: javaCodeLocalStorageKey,
+    csharp: csharpCodeLocalStorageKey
+  }
+
   useEffect(() => {
-    const savedCode = localStorage.getItem(codeLocalStorageKey);
     const savedLanguage = localStorage.getItem(languageLocalStorageKey);
 
     if (savedLanguage) {
       setLanguage(savedLanguage);
     }
 
+    const savedCode = localStorage.getItem(languagesHashMap[savedLanguage]);
+
     if (savedCode !== null) {
       setValue(savedCode);
     } else if (codeQuestion) {
       getStarterCode();
     }
-  }, [questionTitle, codeLocalStorageKey, languageLocalStorageKey]);
+  }, [questionTitle, languageLocalStorageKey]);
 
   const onSelect = (newLanguage) => {
     setLanguage(newLanguage);
     localStorage.setItem(languageLocalStorageKey, newLanguage);
-    
-    if (!manualClear && languageStarterCode && languageStarterCode[newLanguage]) {
+
+    const currentLanguageKey = languagesHashMap[newLanguage];
+    const savedCode = localStorage.getItem(currentLanguageKey);
+
+    if (!manualClear && savedCode) {
+      setValue(savedCode);
+    } else if (languageStarterCode && languageStarterCode[newLanguage]) {
       setValue(languageStarterCode[newLanguage]);
     }
   };
 
   const saveCodeToLocalStorage = (code) => {
     if (code) {
-      localStorage.setItem(codeLocalStorageKey, code);
+      const currentLanguageKey = languagesHashMap[language];
+      localStorage.setItem(currentLanguageKey, code);
     }
   };
 
@@ -62,7 +82,7 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
       localStorage.setItem(starterCodeLocalStorageKey, JSON.stringify(starterCode));
       setLanguageStarterCode(starterCode);
 
-      const savedCode = localStorage.getItem(codeLocalStorageKey);
+      const savedCode = localStorage.getItem(languagesHashMap[language]);
 
       if (!savedCode) {
         setValue(starterCode[language]);

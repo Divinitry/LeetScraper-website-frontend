@@ -5,16 +5,9 @@ const Feedback = ({ codeQuestion, feedback }) => {
 
   useEffect(() => {
     if (feedback) {
-      localStorage.setItem(codeQuestion, JSON.stringify(feedback));
+      setStoredFeedback(feedback);
     }
   }, [codeQuestion, feedback]);
-
-  useEffect(() => {
-    const savedFeedback = localStorage.getItem(codeQuestion);
-    if (savedFeedback) {
-      setStoredFeedback(JSON.parse(savedFeedback));
-    }
-  }, [codeQuestion]);
 
   return (
     <div>
