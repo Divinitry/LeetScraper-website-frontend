@@ -1,0 +1,5 @@
+.editor-wrapper .monaco-editor, 
+.editor-wrapper .overflow-guard {
+  border-radius: 6px;
+  overflow: hidden;
+}

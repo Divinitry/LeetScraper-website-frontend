@@ -23,7 +23,7 @@ const LanguageSelector = ({ language, onSelect, questionTitle }) => {
   }, [questionTitle]);
 
   return (
-    <div className="relative inline-block text-left ml-2 mb-4">
+    <div className="relative inline-block text-left mb-4">
       <label className="mb-2 text-lg block">Language:</label>
 
       <Menu>

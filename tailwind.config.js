@@ -21,6 +21,9 @@ export default {
       boxShadow: {
         'custom-purple': '0 4px 6px -1px rgba(94, 3, 252, 0.5)', 
       },
+      colors: {
+        darkGrey: '#1e1e1e'
+      }
     },
   },
   plugins: [

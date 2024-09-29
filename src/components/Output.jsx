@@ -69,22 +69,6 @@ const Output = ({
         ratings: feedbackData.rating || 0,
       };
 
-      if (
-        codeObject.chatgpt_response ===
-        "Nice code, but it seems unrelated to the question."
-      ) {
-        toast(
-          "The code seems unrelated to the question, but it will still be saved.",
-          {
-            icon: "⚠️",
-            style: {
-              background: "#fbbf24",
-              color: "#fff",
-            },
-          }
-        );
-      }
-
       await api.post(
         `/leetscraper/todolist/questions/${id}/codesolutions/create/`,
         codeObject
@@ -138,9 +122,9 @@ const Output = ({
       </button>
 
       <div
-        className={`h-[72vh] overflow-scroll p-2 rounded-[4px] outline bg-gray-900 ${
-          isError ? "text-red-600 border-red-600" : "outline-gray-800"
-        } flex justify-center items-center`}
+        className={`h-[72vh] overflow-scroll p-2 rounded-[4px] outline bg-darkGrey ${
+          isError ? "text-red-600 border-red-600" : "outline-white/20"
+        } ${!output ? "flex justify-center items-center" : ""}`}
       >
         {output ? (
           output.map((line, index) => <p key={index}>{line}</p>)
