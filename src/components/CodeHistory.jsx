@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../api";
+import LineGraph from "./LineGraph";
 
 const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
   const [history, setHistory] = useState([]);
@@ -22,7 +23,9 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
   
 
   return (
+    
     <div className="container mx-auto p-6">
+      <LineGraph history={history}/>
       {history.length > 0 ? (
         <ul className="space-y-6">
           {history.map((attempt, index) => (
