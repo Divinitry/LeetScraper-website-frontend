@@ -54,6 +54,8 @@ const SearchComponent = () => {
 
       setMessage("LeetCode question added successfully!");
       setIsError(false);
+      setSearchTerm("");
+      setSearchData({});
     } catch (error) {
       if (error.response) {
         const errorMessage = error.response.data.error || "Something went wrong on the server";
@@ -77,9 +79,9 @@ const SearchComponent = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white px-4">
       <h1 className="text-4xl mb-8">Search for a LeetCode Question</h1>
       <form onSubmit={handleSubmit} className="w-full max-w-lg">
-        <div className="flex items-center border-b border-gray-500 py-2">
+        <div className="flex items-center py-2">
           <input
-            className="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none focus:ring-0"
+            className="appearance-none bg-white border-none w-full text-black mr-3 py-1 px-2 leading-tight focus:outline-none focus:ring-0 rounded-2xl h-10"
             type="text"
             placeholder="Enter LeetCode question name"
             value={searchTerm}

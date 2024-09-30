@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/theme-clouds_midnight";
 import api from "../api";
 import LineGraph from "./LineGraph";
 
 const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
   const [history, setHistory] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [averageRating, setAverageRating] = useState(0);
   const [attemptsPerPage] = useState(2);
 
   useEffect(() => {
@@ -16,16 +19,34 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
         const data = response.data;
         setHistory(data);
       } catch (error) {
-        console.log('Error fetching history:', error);
+        console.log("Error fetching history:", error);
       }
     };
-  
+
     fetchHistory();
-  }, [feedback, userCode, id]); 
+  }, [feedback, userCode, id]);
+
+  useEffect(() => {
+    const getAverage = () => {
+      if (history.length > 0) {
+        const totalRatings = history.reduce(
+          (sum, attempt) => sum + attempt.ratings,
+          0
+        );
+        const avgRating = totalRatings / history.length;
+        setAverageRating(Math.ceil(avgRating)); 
+      }
+    };
+
+    getAverage();
+  }, [history]);
 
   const indexOfLastAttempt = currentPage * attemptsPerPage;
   const indexOfFirstAttempt = indexOfLastAttempt - attemptsPerPage;
-  const currentAttempts = history.slice(indexOfFirstAttempt, indexOfLastAttempt);
+  const currentAttempts = history.slice(
+    indexOfFirstAttempt,
+    indexOfLastAttempt
+  );
   const totalPages = Math.ceil(history.length / attemptsPerPage);
 
   const handlePageClick = (pageNumber) => {
@@ -34,31 +55,72 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
 
   return (
     <div className="container mx-auto p-6">
-      <LineGraph history={history} />
+      <div className="flex flex-col lg:flex-row lg:space-x-6 mb-6">
+        <div className="lg:w-2/3 w-full mb-6 lg:mb-0">
+          <LineGraph history={history} />
+        </div>
+
+        <div className="lg:w-1/3 w-full bg-white/10 text-white p-6 rounded-lg shadow-md">
+          <h1 className="text-3xl font-semibold mb-4">
+            {codeQuestion.question_title}
+          </h1>
+          <h2 className="text-xl font-semibold mb-4">Code Analysis Info</h2>
+          <p className="mb-2">
+            <strong>Total Attempts:</strong> {history.length}
+          </p>
+          <p className="mb-2">
+            <strong>Rating Average:</strong> {averageRating}
+          </p>
+        </div>
+      </div>
+
       {history.length > 0 ? (
         <>
           <ul className="space-y-6">
             {currentAttempts.map((attempt, index) => (
-              <li key={index} className="p-6 rounded-lg shadow-md">
-                <h1 className="text-xl font-semibold mb-2">Attempt {indexOfFirstAttempt + index + 1}</h1>
-                <div className="mb-2">
-                  <strong>Code:</strong>
-                  <pre className="bg-white/10 text-white p-4 rounded overflow-x-auto">
-                    <code>{attempt.code}</code>
-                  </pre>
+              <li key={index} className="p-6 rounded-lg shadow-md bg-white/10">
+                <h1 className="text-xl font-semibold mb-2">
+                  Attempt {indexOfFirstAttempt + index + 1}
+                </h1>
+
+                <div className="flex space-x-4">
+                  <div className="w-1/2">
+                    <strong>Code:</strong>
+                    <AceEditor
+                      value={attempt.code}
+                      readOnly={true}
+                      name={`attempt_code_${index}`}
+                      editorProps={{ $blockScrolling: true }}
+                      setOptions={{
+                        useWorker: false, 
+                      }}
+                      width="100%"
+                      height="300px"
+                      theme="clouds_midnight"
+                      className="text-white"
+                    />
+                  </div>
+                  
+                  <div className="w-1/2">
+                    <strong>Feedback:</strong>
+                    <div className="block p-2 rounded overflow-auto h-[300px]">
+                      {attempt.chatgpt_response}
+                    </div>
+                  </div>
                 </div>
-                <p className="mb-2">
-                  <strong>Feedback:</strong> <span className="block p-2 rounded">{attempt.chatgpt_response}</span>
-                </p>
-                <p className="mb-2">
-                  <strong>Rating:</strong> <span className="block p-2 rounded">{attempt.ratings}</span>
+                
+                <p className="mt-2">
+                  <strong>Rating:</strong>{" "}
+                  <span className="block p-2 rounded">
+                    {attempt.ratings}
+                  </span>
                 </p>
               </li>
             ))}
           </ul>
 
           <div className="flex justify-center mt-8">
-            <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation">
               <ul className="flex items-center -space-x-px h-10 text-base">
                 <li>
                   <button
@@ -107,7 +169,9 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
                     onClick={() => handlePageClick(currentPage + 1)}
                     disabled={currentPage === totalPages}
                     className={`flex items-center justify-center px-4 h-10 leading-tight text-white bg-transparent border border-gray-500 rounded-e-lg hover:bg-white/20 ${
-                      currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+                      currentPage === totalPages
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
                     }`}
                   >
                     <span className="sr-only">Next</span>

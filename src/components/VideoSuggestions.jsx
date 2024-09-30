@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const VideoSuggestions = ({ codeQuestion }) => {
   const [videos, setVideos] = useState([]);
   const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
-  const searchTerm = codeQuestion.question_title;
+  const searchTerm = `${codeQuestion.question_title} leetcode`;
   const maxResults = 2;
 
   const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(

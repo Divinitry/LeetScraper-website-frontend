@@ -116,6 +116,9 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
                 setValue(newValue);
                 saveCodeToLocalStorage(newValue);
               }}
+              options={{
+                minimap: { enabled: false },
+              }}
             />
           </div>
         </div>
