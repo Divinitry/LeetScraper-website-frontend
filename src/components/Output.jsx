@@ -12,7 +12,6 @@ const Output = ({
   setFeedback,
   setUserCode,
   id,
-  startedTyping,
 }) => {
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -130,27 +129,23 @@ const Output = ({
         </button>
         <div
           className={`text-green-400 mb-4 inline-flex justify-center items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold h-[38px] ${
-            isDisabled || startedTyping 
+            isDisabled
               ? "bg-white/10 cursor-not-allowed"
               : "bg-white/15 hover:bg-white/20"
           }`}
         >
           <button
             className={`flex items-center ${
-              isDisabled || startedTyping 
-                ? "cursor-not-allowed text-white/40"
-                : "text-green-400"
+              isDisabled ? "cursor-not-allowed text-white/40" : "text-green-400"
             }`}
             onClick={handleSave}
-            disabled={isDisabled || startedTyping}
+            disabled={isDisabled}
           >
             <CloudUploadOutlinedIcon
               style={{ fontSize: "22px" }}
               className={`mr-2 ${
-                isDisabled || startedTyping 
-                  ? "text-white/40"
-                  : "text-green-400"
-              }`}
+                isDisabled ? "text-white/40" : "text-green-400"
+              }`} 
             />
             Save & Feedback
           </button>

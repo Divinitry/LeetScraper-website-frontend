@@ -110,7 +110,7 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
           <LineGraph history={history} />
         </div>
 
-        <div className="justify-center w-full border bg-white/10 border-white/20 text-white p-6 rounded-lg shadow-md text-center">
+        <div className="flex flex-col justify-center items-center w-full border bg-white/5 border-white/20 text-white p-6 rounded-lg shadow-md text-center">
           <h2 className="text-xl font-semibold mb-4">Code Analysis Info</h2>
 
           <table className="table-auto w-full text-left mb-4">
@@ -126,7 +126,9 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="px-4 py-2 text-center text-3xl">{history.length}</td>
+                <td className="px-4 py-2 text-center text-3xl">
+                  {history.length}
+                </td>
                 <td className="px-4 py-2">
                   <div
                     ref={progressRef}

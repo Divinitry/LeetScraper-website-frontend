@@ -11,7 +11,6 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
   const [language, setLanguage] = useState("Select Language");
   const [languageStarterCode, setLanguageStarterCode] = useState(null);
   const [isFetching, setIsFetching] = useState(false); 
-  const [startedTyping, setStartedTyping] = useState(false)
 
   const javascriptCodeLocalStorageKey = `javascriptcode_${questionTitle}`;
   const typescriptCodeLocalStorageKey = `typescriptcode_${questionTitle}`;
@@ -127,7 +126,6 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
               onChange={(newValue) => {
                 setValue(newValue);
                 saveCodeToLocalStorage(newValue);
-                setStartedTyping(true);
               }}
               options={{
                 minimap: { enabled: false },
@@ -140,10 +138,8 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
           language={language}
           codeQuestion={codeQuestion}
           setFeedback={setFeedback}
-          userCode={userCode}
           setUserCode={setUserCode}
           id={id}
-          startedTyping={startedTyping}
         />
       </div>
     </div>
