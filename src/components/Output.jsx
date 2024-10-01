@@ -1,6 +1,8 @@
 import { executeCode } from "../pistionapi";
 import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import api from "../api";
 
 const Output = ({
@@ -10,12 +12,13 @@ const Output = ({
   setFeedback,
   setUserCode,
   id,
-  userCode,
+  startedTyping,
 }) => {
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [currentCode, setCurrentCode] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const runCode = async () => {
     const sourceCode = editorRef.current.getValue().trim();
@@ -29,6 +32,7 @@ const Output = ({
       const { run: result } = await executeCode(language, sourceCode);
       setOutput(result.output.split("\n"));
       result.stderr ? setIsError(true) : setIsError(false);
+      setIsDisabled(false);
     } catch (error) {
       console.error("Error during code execution:", error);
       const errorMessage =
@@ -75,6 +79,7 @@ const Output = ({
       );
 
       setFeedback(feedbackData);
+      setIsDisabled(true);
 
       console.log("Feedback:", feedbackData.feedback);
       console.log("Rating:", feedbackData.rating);
@@ -87,39 +92,70 @@ const Output = ({
 
   return (
     <div className="w-1/2 relative">
-      <p className="mb-2 text-lg">Output</p>
-      <button
-        className={`mb-4 inline-flex justify-center gap-x-1.5 rounded-md bg-transparent px-3 py-2 text-sm font-semibold border shadow-sm ring-1 ring-inset hover:bg-white/5 h-[38px] ${
-          isLoading ? "cursor-not-allowed opacity-50" : "text-white"
-        }`}
-        onClick={runCode}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <svg
-            className="animate-spin h-5 w-5 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
+      <div className="flex flex-row space-x-[1px]">
+        <button
+          className={`mb-4 inline-flex justify-center gap-x-1.5 rounded-l-md bg-white/15 px-3 py-2 text-sm font-semibold hover:bg-white/20 h-[38px] ${
+            isLoading ? "cursor-not-allowed opacity-50" : "text-white"
+          }`}
+          onClick={runCode}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <svg
+              className="animate-spin h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              ></path>
+            </svg>
+          ) : (
+            <>
+              <PlayArrowIcon style={{ fontSize: "22px" }} />
+              Run Code
+            </>
+          )}
+        </button>
+        <div
+          className={`text-green-400 mb-4 inline-flex justify-center items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold h-[38px] ${
+            isDisabled || startedTyping 
+              ? "bg-white/10 cursor-not-allowed"
+              : "bg-white/15 hover:bg-white/20"
+          }`}
+        >
+          <button
+            className={`flex items-center ${
+              isDisabled || startedTyping 
+                ? "cursor-not-allowed text-white/40"
+                : "text-green-400"
+            }`}
+            onClick={handleSave}
+            disabled={isDisabled || startedTyping}
           >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-            ></path>
-          </svg>
-        ) : (
-          "Run Code"
-        )}
-      </button>
+            <CloudUploadOutlinedIcon
+              style={{ fontSize: "22px" }}
+              className={`mr-2 ${
+                isDisabled || startedTyping 
+                  ? "text-white/40"
+                  : "text-green-400"
+              }`}
+            />
+            Save & Feedback
+          </button>
+        </div>
+      </div>
 
       <div
         className={`h-[72vh] overflow-scroll p-2 rounded-[4px] outline bg-darkGrey ${
@@ -134,14 +170,6 @@ const Output = ({
       </div>
 
       <Toaster />
-
-      {currentCode && output && (
-        <div className="absolute left-1/2 transform -translate-x-1/2">
-          <button className="bg-emerald-500 p-1" onClick={handleSave}>
-            Get feedback
-          </button>
-        </div>
-      )}
     </div>
   );
 };

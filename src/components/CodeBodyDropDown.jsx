@@ -8,7 +8,7 @@ import {
 const CodeBodyDropDown = ({ codeQuestion, difficultyColour }) => {
   return (
     <div>
-      <Accordion className="bg-white/10 border-none">
+      <Accordion className="bg-white/10 border-none mb-4">
         <AccordionPanel>
           <AccordionTitle className="bg-white/1 hover:bg-white/5 text-white fill-current focus:ring-0">
             <p className="text-4xl mb-4">{codeQuestion?.question_title}</p>

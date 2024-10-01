@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { useEffect, useState } from "react";
 import { LANGUAGE_VERSIONS } from "../constants";
+import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
 
 const languages = Object.entries(LANGUAGE_VERSIONS);
 
@@ -17,15 +18,14 @@ const LanguageSelector = ({ language, onSelect, isFetching }) => {
 
   return (
     <div className="relative inline-block text-left mb-4">
-      <label className="mb-2 text-lg block">Language:</label>
 
       <Menu>
         <MenuButton
           disabled={isDisabled}
-          className={`inline-flex justify-center items-center gap-x-2 rounded-md px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset h-[38px] ${
+          className={`inline-flex justify-center items-center gap-x-2 rounded-md px-3 py-2 text-sm font-semibold  h-[38px] ${
             isDisabled
-              ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-              : "bg-white text-gray-900 ring-gray-300 hover:bg-gray-50"
+              ? "bg-white/15 text-white cursor-not-allowed"
+              : "bg-white/15 text-white hover:bg-white/20"
           }`}
         >
           {isFetching ? (
@@ -57,7 +57,10 @@ const LanguageSelector = ({ language, onSelect, isFetching }) => {
               <span>Generating starter code...</span>
             </>
           ) : (
-            language
+            <>
+            <CodeOutlinedIcon/>
+            {language}
+            </>
           )}
         </MenuButton>
 
