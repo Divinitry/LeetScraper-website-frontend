@@ -4,23 +4,16 @@ import { LANGUAGE_VERSIONS } from "../constants";
 
 const languages = Object.entries(LANGUAGE_VERSIONS);
 
-const LanguageSelector = ({ language, onSelect, questionTitle }) => {
+const LanguageSelector = ({ language, onSelect, isFetching }) => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
-    const hasVisitedBefore = localStorage.getItem(`hasVisited_${questionTitle}`);
-
-    if (!hasVisitedBefore) {
-      const timer = setTimeout(() => {
-        setIsDisabled(false);
-        localStorage.setItem(`hasVisited_${questionTitle}`, true);
-      }, 8000);
-
-      return () => clearTimeout(timer);
+    if (isFetching) {
+      setIsDisabled(true);  
     } else {
-      setIsDisabled(false);
+      setIsDisabled(false); 
     }
-  }, [questionTitle]);
+  }, [isFetching]);
 
   return (
     <div className="relative inline-block text-left mb-4">
@@ -35,7 +28,7 @@ const LanguageSelector = ({ language, onSelect, questionTitle }) => {
               : "bg-white text-gray-900 ring-gray-300 hover:bg-gray-50"
           }`}
         >
-          {isDisabled ? (
+          {isFetching ? (
             <>
               <svg
                 className="w-4 h-4 text-gray-300 animate-spin"

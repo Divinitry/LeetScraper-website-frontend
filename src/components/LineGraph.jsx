@@ -43,9 +43,10 @@ const LineGraph = ({ history }) => {
         data: attemptsRatings, 
         backgroundColor: "rgba(225, 225, 225, 0.7)",
         borderColor: "rgba(225, 225, 225, 0.7)",
-        pointBackgroundColor: "rgba(225, 225, 225, 1)",
+        pointBackgroundColor: "black",
         pointBorderColor: "rgba(225, 225, 225, 1)", 
-        pointRadius: 7,
+        pointRadius: 4,
+        borderWidth: 2,
       }
     ]
   };
@@ -83,6 +84,9 @@ const LineGraph = ({ history }) => {
         },
         ticks: {
           color: "white", 
+          font: {
+            size: '15px'
+          }
         },
       },
       x: {
@@ -98,7 +102,10 @@ const LineGraph = ({ history }) => {
           color: "rgba(51, 51, 51, 0.4)", 
         },
         ticks: {
-          color: "white", 
+          color: "white",
+          font: {
+            size: '15px'
+          } 
         },
       }
     },

@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/theme-clouds_midnight";
+import ProgressBar from "progressbar.js";
 import api from "../api";
 import LineGraph from "./LineGraph";
 
@@ -9,6 +10,8 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [averageRating, setAverageRating] = useState(0);
   const [attemptsPerPage] = useState(2);
+  const progressRef = useRef(null);
+  const progressBarInstance = useRef(null);
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -34,12 +37,59 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
           0
         );
         const avgRating = totalRatings / history.length;
-        setAverageRating(Math.ceil(avgRating)); 
+        setAverageRating(Math.ceil(avgRating));
       }
     };
 
     getAverage();
   }, [history]);
+
+  useEffect(() => {
+    if (progressRef.current) {
+      if (!progressBarInstance.current) {
+        progressBarInstance.current = new ProgressBar.Circle(
+          progressRef.current,
+          {
+            strokeWidth: 6,
+            color: "#00FF00",
+            trailColor: "#eee",
+            trailWidth: 1,
+            easing: "easeInOut",
+            duration: 1400,
+            text: {
+              value: "",
+              alignToBottom: true,
+            },
+            from: { color: "#FFEA82" },
+            to: { color: "#ED6A5A" },
+            step: (state, bar) => {
+              bar.path.setAttribute("stroke", state.color);
+              const value = Math.round(bar.value() * 10);
+              if (value === 0) {
+                bar.setText("");
+              } else {
+                bar.setText(`${value}/10`);
+              }
+              bar.text.style.color = state.color;
+            },
+            svgStyle: {
+              width: "100%",
+              height: "100%",
+            },
+          }
+        );
+      }
+
+      progressBarInstance.current.animate(averageRating / 10);
+    }
+
+    return () => {
+      if (progressBarInstance.current) {
+        progressBarInstance.current.destroy();
+        progressBarInstance.current = null;
+      }
+    };
+  }, [averageRating]);
 
   const indexOfLastAttempt = currentPage * attemptsPerPage;
   const indexOfFirstAttempt = indexOfLastAttempt - attemptsPerPage;
@@ -55,22 +105,37 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
 
   return (
     <div className="container mx-auto p-6">
-      <div className="flex flex-col lg:flex-row lg:space-x-6 mb-6">
-        <div className="lg:w-2/3 w-full mb-6 lg:mb-0">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="lg:col-span-2 w-full mb-6 lg:mb-0">
           <LineGraph history={history} />
         </div>
 
-        <div className="lg:w-1/3 w-full bg-white/10 text-white p-6 rounded-lg shadow-md">
-          <h1 className="text-3xl font-semibold mb-4">
-            {codeQuestion.question_title}
-          </h1>
+        <div className="justify-center w-full border bg-white/10 border-white/20 text-white p-6 rounded-lg shadow-md text-center">
           <h2 className="text-xl font-semibold mb-4">Code Analysis Info</h2>
-          <p className="mb-2">
-            <strong>Total Attempts:</strong> {history.length}
-          </p>
-          <p className="mb-2">
-            <strong>Rating Average:</strong> {averageRating}
-          </p>
+
+          <table className="table-auto w-full text-left mb-4">
+            <thead>
+              <tr>
+                <th className="px-4 py-2 text-center text-white/70 font-normal">
+                  Total Attempts
+                </th>
+                <th className="px-4 py-2 text-center text-white/70 font-normal">
+                  Rating Average
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="px-4 py-2 text-center text-3xl">{history.length}</td>
+                <td className="px-4 py-2">
+                  <div
+                    ref={progressRef}
+                    className="w-full h-32 max-w-xs mx-auto"
+                  ></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -92,7 +157,7 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
                       name={`attempt_code_${index}`}
                       editorProps={{ $blockScrolling: true }}
                       setOptions={{
-                        useWorker: false, 
+                        useWorker: false,
                       }}
                       width="100%"
                       height="300px"
@@ -100,7 +165,7 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
                       className="text-white"
                     />
                   </div>
-                  
+
                   <div className="w-1/2">
                     <strong>Feedback:</strong>
                     <div className="block p-2 rounded overflow-auto h-[300px]">
@@ -108,12 +173,10 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
                     </div>
                   </div>
                 </div>
-                
+
                 <p className="mt-2">
                   <strong>Rating:</strong>{" "}
-                  <span className="block p-2 rounded">
-                    {attempt.ratings}
-                  </span>
+                  <span className="block p-2 rounded">{attempt.ratings}</span>
                 </p>
               </li>
             ))}

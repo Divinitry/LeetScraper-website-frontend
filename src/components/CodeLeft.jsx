@@ -3,13 +3,14 @@ import { Editor } from "@monaco-editor/react";
 import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
 import api from "../api";
-import './CodeLeft.css'
+import './CodeLeft.css';
 
 const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, userCode }) => {
   const editorRef = useRef();
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("Select Language");
   const [languageStarterCode, setLanguageStarterCode] = useState(null);
+  const [isFetching, setIsFetching] = useState(false); 
 
   const javascriptCodeLocalStorageKey = `javascriptcode_${questionTitle}`;
   const typescriptCodeLocalStorageKey = `typescriptcode_${questionTitle}`;
@@ -31,7 +32,8 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
   useEffect(() => {
     const savedLanguage = localStorage.getItem(languageLocalStorageKey);
     const cachedStarterCode = localStorage.getItem(starterCodeLocalStorageKey);
-    
+    const starterCodeFetchedFlag = localStorage.getItem(`starter_code_fetched_${questionTitle}`);
+
     if (savedLanguage) {
       setLanguage(savedLanguage);
     }
@@ -44,10 +46,12 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
       const starterCode = JSON.parse(cachedStarterCode);
       setLanguageStarterCode(starterCode);
       setValue(starterCode[savedLanguage] || "");
-    } else if (codeQuestion) {
+    } else if (codeQuestion && !starterCodeFetchedFlag) {
+      setIsFetching(true);
       getStarterCode(savedLanguage || language);
+      localStorage.setItem(`starter_code_fetched_${questionTitle}`, "true");
     }
-  }, [questionTitle, language]);
+  }, [questionTitle]);
 
   const onSelect = (newLanguage) => {
     setLanguage(newLanguage);
@@ -93,6 +97,8 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsFetching(false); 
     }
   };
 
@@ -100,7 +106,12 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
     <div>
       <div className="flex flex-items-center space-x-4">
         <div className="w-1/2">
-          <LanguageSelector language={language} onSelect={onSelect} questionTitle={questionTitle}/>
+          <LanguageSelector
+            language={language}
+            onSelect={onSelect}
+            questionTitle={questionTitle}
+            isFetching={isFetching}
+          />
           <div className="editor-wrapper outline outline-white/20 rounded-md">
             <Editor
               height="72vh"
@@ -122,7 +133,15 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
             />
           </div>
         </div>
-        <Output editorRef={editorRef} language={language} codeQuestion={codeQuestion} setFeedback={setFeedback} userCode={userCode} setUserCode={setUserCode} id={id}/>
+        <Output
+          editorRef={editorRef}
+          language={language}
+          codeQuestion={codeQuestion}
+          setFeedback={setFeedback}
+          userCode={userCode}
+          setUserCode={setUserCode}
+          id={id}
+        />
       </div>
     </div>
   );
