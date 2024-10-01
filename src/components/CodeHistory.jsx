@@ -60,8 +60,8 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
               value: "",
               alignToBottom: true,
             },
-            from: { color: "#FFEA82" },
-            to: { color: "#ED6A5A" },
+            from: { color: "#200354" },
+            to: { color: "#6b1efa" },
             step: (state, bar) => {
               bar.path.setAttribute("stroke", state.color);
               const value = Math.round(bar.value() * 10);
@@ -70,7 +70,7 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
               } else {
                 bar.setText(`${value}/10`);
               }
-              bar.text.style.color = state.color;
+              bar.text.style.color = "white";
             },
             svgStyle: {
               width: "100%",
@@ -145,14 +145,14 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
         <>
           <ul className="space-y-6">
             {currentAttempts.map((attempt, index) => (
-              <li key={index} className="p-6 rounded-lg shadow-md bg-white/10">
-                <h1 className="text-xl font-semibold mb-2">
-                  Attempt {indexOfFirstAttempt + index + 1}
+              <li key={index} className="p-6 rounded-lg shadow-md bg-white/5 border border-white/20">
+                <h1 className="text-4xl font-semibold mb-10 text-start">
+                  Attempt: {indexOfFirstAttempt + index + 1}
                 </h1>
 
-                <div className="flex space-x-4">
+                <div className="flex space-x-1">
                   <div className="w-1/2">
-                    <strong>Code:</strong>
+                    <strong className="text-2xl pb-2 pt-1 px-2 rounded-t-md" style={{backgroundColor: "#232323"}}>Code</strong>
                     <AceEditor
                       value={attempt.code}
                       readOnly={true}
@@ -169,17 +169,28 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
                   </div>
 
                   <div className="w-1/2">
-                    <strong>Feedback:</strong>
-                    <div className="block p-2 rounded overflow-auto h-[300px]">
+                    <strong className="text-2xl pb-2 pt-1 px-2 rounded-t-md" style={{backgroundColor: "#181918"}}>Feedback</strong>
+                    <div className="block p-2 overflow-auto h-[300px]" style={{backgroundColor: "#181918"}}>
                       {attempt.chatgpt_response}
                     </div>
                   </div>
                 </div>
 
-                <p className="mt-2">
-                  <strong>Rating:</strong>{" "}
-                  <span className="block p-2 rounded">{attempt.ratings}</span>
-                </p>
+                <div className="relative pt-1 mt-2">
+                  <div className="flex mb-2 items-center justify-between">
+                    <div>
+                      <span className="text-lg font-semibold inline-block py-1 px-2 uppercase rounded-full text-white bg-white/10">
+                        Rating: {attempt.ratings}/10
+                      </span>
+                    </div>
+                  </div>
+                  <div className="overflow-hidden h-3 mb-4 text-xs flex rounded bg-white/15">
+                    <div
+                      style={{ width: `${(attempt.ratings / 10) * 100}%` }}
+                      className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-violet-800"
+                    ></div>
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
