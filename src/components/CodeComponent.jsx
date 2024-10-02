@@ -95,19 +95,19 @@ const CodeComponent = () => {
             },
           }}
         >
-          <Tooltip title="Feedback" placement="bottom">
+          <Tooltip title="Feedback" placement="bottom" arrow>
             <Tab icon={<FeedbackIcon />} label="" />
           </Tooltip>
-          <Tooltip title="History" placement="bottom">
+          <Tooltip title="History" placement="bottom" arrow>
             <Tab icon={<HistoryIcon />} label="" />
           </Tooltip>
-          <Tooltip title="White Board" placement="bottom">
+          <Tooltip title="White Board" placement="bottom" arrow>
             <Tab icon={<DrawIcon />} label="" />
           </Tooltip>
-          <Tooltip title="Notes" placement="bottom">
+          <Tooltip title="Notes" placement="bottom" arrow>
             <Tab icon={<NoteIcon />} label="" />
           </Tooltip>
-          <Tooltip title="Additional Resources" placement="bottom">
+          <Tooltip title="Additional Resources" placement="bottom" arrow>
             <Tab icon={<VideoLibraryIcon />} label="" />
           </Tooltip>
         </Tabs>

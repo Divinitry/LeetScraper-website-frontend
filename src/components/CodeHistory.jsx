@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import ErrorIcon from '@mui/icons-material/Error';
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/theme-clouds_midnight";
 import ProgressBar from "progressbar.js";
@@ -275,6 +276,14 @@ const CodeHistory = ({ codeQuestion, feedback, id, userCode }) => {
       ) : (
         <p className="text-center text-gray-500">No attempts yet.</p>
       )}
+          <div className="pt-5"> 
+            <div className="flex flex-row justify-center items-center space-x-3">
+            <ErrorIcon className="text-white/50" style={{ fontSize: '15px' }} />
+            <p className="text-white/50 font-thin text-sm">
+            ChatGPT can make mistakes. Check important info.
+            </p>
+            </div>
+          </div>
     </div>
   );
 };

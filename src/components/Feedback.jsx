@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import CodeIcon from "@mui/icons-material/Code";
+import ErrorIcon from '@mui/icons-material/Error';
 import CircleIcon from "@mui/icons-material/Circle";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
@@ -114,6 +115,14 @@ const Feedback = ({ codeQuestion, feedback }) => {
           )}
         </div>
       </div>
+      <div className="pt-5"> 
+            <div className="flex flex-row justify-center items-center space-x-3">
+            <ErrorIcon className="text-white/50" style={{ fontSize: '15px' }} />
+            <p className="text-white/50 font-thin text-sm">
+            ChatGPT can make mistakes. Check important info.
+            </p>
+            </div>
+          </div>
     </div>
   );
 };
