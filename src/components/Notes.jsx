@@ -115,8 +115,6 @@ const Notes = ({ id }) => {
         </button>
       </div>
 
-      {/* Note itself */}
-
       <div className="flex flex-row space-x-4 overflow-scroll justify-center">
         {allNotes.length === 0 ? (
           <div className="w-80 h-80 bg-white/5 rounded-md flex justify-center items-center"></div>
@@ -159,8 +157,6 @@ const Notes = ({ id }) => {
           ))
         )}
       </div>
-
-      {/* Modal pop up down below */}
 
       {selectedNote && (
         <Modal

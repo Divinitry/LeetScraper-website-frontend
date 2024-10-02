@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import searchPic from "../assets/finalSearchpicture.png";
 import codeEditorPic from "../assets/finalcodeeditor.png";
-import feedbackPic from '../assets/finalstatspic.png';
+import feedbackPic from "../assets/finalstatspic.png";
 
 const MainContent = () => {
   const navigate = useNavigate();
@@ -18,33 +18,32 @@ const MainContent = () => {
             personalized notes and resources, and built-in code
             terminal—designed to help you conquer every challenge.
           </p>
-          
-          <button
-  onClick={() => navigate("/search")}
-  className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none mx-auto opacity-0 animate-fade-up [animation-delay:500ms]"
->
-  <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-  <span className="inline-flex h-full items-center justify-center rounded-full bg-gray-950 px-8 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
-    Get Started
-    <div className="pl-2 pr-0">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-        className="size-5"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-        />
-      </svg>
-    </div>
-  </span>
-</button>
 
+          <button
+            onClick={() => navigate("/search")}
+            className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none mx-auto opacity-0 animate-fade-up [animation-delay:500ms]"
+          >
+            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+            <span className="inline-flex h-full items-center justify-center rounded-full bg-gray-950 px-8 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
+              Get Started
+              <div className="pl-2 pr-0">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                  />
+                </svg>
+              </div>
+            </span>
+          </button>
         </div>
       </div>
 
@@ -60,7 +59,10 @@ const MainContent = () => {
             </p>
           </div>
           <div className="lg:w-1/2 flex justify-center">
-            <img src={searchPic} className="w-full h-auto object-cover rounded-md" />
+            <img
+              src={searchPic}
+              className="w-full h-auto object-cover rounded-md"
+            />
           </div>
         </div>
       </div>
@@ -71,11 +73,19 @@ const MainContent = () => {
           <div className="p-16 lg:w-1/2 flex flex-col justify-center text-start overflow-y-auto">
             <h1 className="text-4xl">Code using our built-in IDE.</h1>
             <p className="pt-10 text-xl text-gray-400">
-              LeetScraper offers a fully integrated IDE, allowing users to write, test, and debug their code in the browser. With real-time feedback, syntax highlighting, and insights, you can tackle LeetCode problems without switching platforms. Whether practicing algorithms or learning new concepts, our IDE optimizes your coding experience.
+              LeetScraper offers a fully integrated IDE, allowing users to
+              write, test, and debug their code in the browser. With real-time
+              feedback, syntax highlighting, and insights, you can tackle
+              LeetCode problems without switching platforms. Whether practicing
+              algorithms or learning new concepts, our IDE optimizes your coding
+              experience.
             </p>
           </div>
           <div className="lg:w-1/2 flex justify-center">
-            <img src={codeEditorPic} className="w-full h-auto object-cover rounded-md" />
+            <img
+              src={codeEditorPic}
+              className="w-full h-auto object-cover rounded-md"
+            />
           </div>
         </div>
       </div>
@@ -84,15 +94,21 @@ const MainContent = () => {
         <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
         <div className="flex h-[500px] w-full items-center justify-center rounded-xl bg-black px-3 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
           <div className="p-16 lg:w-1/2 flex flex-col justify-center text-start overflow-y-auto">
-            <h1 className="text-4xl">
-              Instant feedback with statistics
-            </h1>
+            <h1 className="text-4xl">Instant feedback with statistics</h1>
             <p className="pt-10 text-xl text-gray-400">
-              LeetScraper lets you write detailed notes for each problem, track your progress, and get feedback specific to your code. Whether it's your first time solving a problem or revisiting it, our platform gives a comprehensive view of your journey. Stay motivated with progression tracking and build confidence through constructive feedback to help you improve.
+              LeetScraper lets you write detailed notes for each problem, track
+              your progress, and get feedback specific to your code. Whether
+              it's your first time solving a problem or revisiting it, our
+              platform gives a comprehensive view of your journey. Stay
+              motivated with progression tracking and build confidence through
+              constructive feedback to help you improve.
             </p>
           </div>
           <div className="lg:w-1/2 flex justify-center">
-            <img src={feedbackPic} className="w-full h-auto object-cover rounded-md" />
+            <img
+              src={feedbackPic}
+              className="w-full h-auto object-cover rounded-md"
+            />
           </div>
         </div>
       </div>
