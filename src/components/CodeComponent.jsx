@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Tabs, Tab, Box, Typography } from "@mui/material";
-import FeedbackIcon from '@mui/icons-material/Feedback';
-import HistoryIcon from '@mui/icons-material/History';
-import NoteIcon from '@mui/icons-material/Note';
-import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
-import DrawIcon from '@mui/icons-material/Draw';
+import { Tabs, Tab, Box } from "@mui/material";
+import { Tooltip } from "@mui/material";
+import FeedbackIcon from "@mui/icons-material/Feedback";
+import HistoryIcon from "@mui/icons-material/History";
+import NoteIcon from "@mui/icons-material/Note";
+import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
+import DrawIcon from "@mui/icons-material/Draw";
 import api from "../api";
 import CodeEditor from "./CodeEditor";
 import Notes from "./Notes";
@@ -58,9 +59,16 @@ const CodeComponent = () => {
         codeQuestion={codeQuestion}
         difficultyColour={difficultyColour}
       />
-      <CodeEditor questionTitle={codeQuestion.question_title} codeQuestion={codeQuestion} setFeedback={setFeedback} userCode={userCode} setUserCode={setUserCode} id={id}/>
+      <CodeEditor
+        questionTitle={codeQuestion.question_title}
+        codeQuestion={codeQuestion}
+        setFeedback={setFeedback}
+        userCode={userCode}
+        setUserCode={setUserCode}
+        id={id}
+      />
 
-      <Box >
+      <Box>
         <Tabs
           value={tabValue}
           onChange={handleChange}
@@ -68,32 +76,55 @@ const CodeComponent = () => {
           aria-label="Code Component Tabs"
           sx={{
             "& .MuiTab-root": {
-              color: "white", 
+              color: "white",
+              backgroundColor: "#1c1c1c",
+              borderRadius: "5px",
+              margin: "0 10px",
+              padding: "0",
+              transition: "background-color 0.3s ease, color 0.3s ease",
+              padding: "0px",
+            },
+            "& .MuiTab-root:hover": {
+              backgroundColor: "#333333",
             },
             "& .MuiTab-root.Mui-selected": {
-              color: "white", 
+              color: "grey",
             },
             "& .MuiTabs-indicator": {
-              backgroundColor: "#5d00fc", 
+              backgroundColor: "transparent",
             },
           }}
-          className="border-b" style={{ borderColor: 'hsl(0, 0%, 14.9%)' }}
         >
-          <Tab icon={<FeedbackIcon />} label="Feedback" />
-          <Tab icon={<HistoryIcon />} label="History / Progression" />
-          <Tab icon={<DrawIcon />} label="White Board"/>
-          <Tab icon={<NoteIcon />} label="Notes" />
-          <Tab icon={<VideoLibraryIcon />} label="Additional Resources" />
+          <Tooltip title="Feedback" placement="bottom">
+            <Tab icon={<FeedbackIcon />} label="" />
+          </Tooltip>
+          <Tooltip title="History" placement="bottom">
+            <Tab icon={<HistoryIcon />} label="" />
+          </Tooltip>
+          <Tooltip title="White Board" placement="bottom">
+            <Tab icon={<DrawIcon />} label="" />
+          </Tooltip>
+          <Tooltip title="Notes" placement="bottom">
+            <Tab icon={<NoteIcon />} label="" />
+          </Tooltip>
+          <Tooltip title="Additional Resources" placement="bottom">
+            <Tab icon={<VideoLibraryIcon />} label="" />
+          </Tooltip>
         </Tabs>
 
         <TabPanel value={tabValue} index={0}>
-          <Feedback feedback={feedback}/>
+          <Feedback feedback={feedback} />
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
-          <CodeHistory codeQuestion={codeQuestion} feedback={feedback} id={id} userCode={userCode}/>
+          <CodeHistory
+            codeQuestion={codeQuestion}
+            feedback={feedback}
+            id={id}
+            userCode={userCode}
+          />
         </TabPanel>
         <TabPanel value={tabValue} index={2}>
-          <WhiteBoard/>
+          <WhiteBoard />
         </TabPanel>
         <TabPanel value={tabValue} index={3}>
           <Notes id={id} />
@@ -117,11 +148,7 @@ function TabPanel(props) {
       aria-labelledby={`tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box p={3}>
-          {children}  
-        </Box>
-      )}
+      {value === index && <Box p={3}>{children}</Box>}
     </div>
   );
 }

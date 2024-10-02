@@ -106,7 +106,7 @@ const Feedback = ({ codeQuestion, feedback }) => {
             </p>
           ) : (
             <p
-              className="flex justify-center items-center h-full p-5 text-lg font-thin text-stone-500"
+              className="flex h-64 justify-center items-center p-5 text-lg font-thin text-stone-500"
               style={{ fontFamily: "Roboto, sans-serif" }}
             >
               Rating

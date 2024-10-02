@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = () => {
+const Header = ({ isLoggedIn }) => {
     return (
         <header className="fixed top-0 left-0 w-full z-50 border-b bg-black" style={{ borderColor: 'hsl(0, 0%, 14.9%)' }}>
             <div className="container mx-auto flex flex-col lg:flex-row lg:items-center px-4 py-7 relative">
@@ -40,13 +40,16 @@ const Header = () => {
                         <li className="lg:mr-12"><a className="rounded transition focus:outline-none font-thin text-2xl hover:text-opacity-50" href="/search">Search</a></li>
                     </ul>
                     <div className="absolute right-0 top-0 my-4 flex items-center lg:my-0 lg:ml-auto space-x-4">
-                        <a href="/login" className="whitespace-nowrap rounded transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Log in </a>
-                        <a href="/logout" className="whitespace-nowrap rounded transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Log out </a>
+                        {isLoggedIn ? (
+                            <a href="/logout" className="whitespace-nowrap rounded transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Log out </a>
+                        ) : (
+                            <a href="/login" className="whitespace-nowrap rounded transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-offset-2 hover:text-opacity-50 font-thin text-2xl"> Log in </a>
+                        )}
                     </div>
                 </nav>
             </div>
         </header>
-    )
-}
+    );
+};
 
 export default Header;
