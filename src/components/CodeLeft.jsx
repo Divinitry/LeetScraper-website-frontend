@@ -53,22 +53,40 @@ const CodeLeft = ({ questionTitle, codeQuestion, setFeedback, setUserCode, id, u
     }
   }, [questionTitle]);
 
+  useEffect(() => {
+    const fetchCode = async () => {
+      const starterCodeFetchedFlag = localStorage.getItem(`starter_code_fetched_${questionTitle}`);
+      if (!starterCodeFetchedFlag && language) {
+        setIsFetching(true);
+        await getStarterCode(language);
+        localStorage.setItem(`starter_code_fetched_${questionTitle}`, "true");
+        setIsFetching(false);
+      }
+    };
+
+    fetchCode();
+  }, [language, questionTitle]);
+
   const onSelect = (newLanguage) => {
+    saveCodeToLocalStorage(value);
+  
     setLanguage(newLanguage);
     localStorage.setItem(languageLocalStorageKey, newLanguage);
-
+  
     const currentLanguageKey = languagesHashMap[newLanguage];
     const savedCode = localStorage.getItem(currentLanguageKey);
-
+  
     if (savedCode) {
-      setValue(savedCode);
+      setValue(savedCode); 
     } else if (languageStarterCode && languageStarterCode[newLanguage]) {
-      setValue(languageStarterCode[newLanguage]);
+      setValue(languageStarterCode[newLanguage]); 
+    } else {
+      setValue("");
     }
   };
 
   const saveCodeToLocalStorage = (code) => {
-    if (code) {
+    if (code && language) {
       const currentLanguageKey = languagesHashMap[language];
       localStorage.setItem(currentLanguageKey, code);
     }
