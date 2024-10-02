@@ -1,4 +1,7 @@
-import { useNavigate } from "react-router-dom";;
+import { useNavigate } from "react-router-dom";
+import searchPic from "../assets/finalSearchpicture.png";
+import codeEditorPic from "../assets/finalcodeeditor.png";
+import feedbackPic from '../assets/finalstatspic.png';
 
 const MainContent = () => {
   const navigate = useNavigate();
@@ -18,7 +21,7 @@ const MainContent = () => {
           
           <button
             onClick={() => navigate("/search")}
-            className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none mx-auto"
+            className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none mx-auto [animation-delay:500ms] animate-fade-up"
           >
             <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
             <span className="inline-flex h-full items-center justify-center rounded-full bg-gray-950 px-8 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
@@ -46,8 +49,8 @@ const MainContent = () => {
 
       <div className="w-full md:w-5/6 lg:w-3/4 relative overflow-hidden rounded-xl border border-gray-800 p-[1px] my-36 mx-auto shadow-custom-purple">
         <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-        <div className="inline-flex h-full w-full items-center justify-center rounded-xl bg-black px-3 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
-          <div className="p-16 lg:w-1/2 flex flex-col justify-center text-start">
+        <div className="flex h-[500px] w-full items-center justify-center rounded-xl bg-black px-3 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
+          <div className="p-16 lg:w-1/2 flex flex-col justify-center text-start overflow-y-auto">
             <h1 className="text-4xl">Search for your Leetcode problem</h1>
             <p className="pt-10 text-xl text-gray-400">
               LeetScraper is designed to streamline your LeetCode journey by
@@ -55,53 +58,40 @@ const MainContent = () => {
               and a seamless coding environment, all in one place.
             </p>
           </div>
-          <div className="p-16 lg:w-1/2 flex flex-col justify-center text-center">
-            Image of the search function goes here
+          <div className="lg:w-1/2 flex justify-center">
+            <img src={searchPic} className="w-full h-auto object-cover rounded-md" />
           </div>
         </div>
       </div>
 
       <div className="w-full md:w-5/6 lg:w-3/4 relative overflow-hidden rounded-xl border border-gray-800 p-[1px] my-36 mx-auto shadow-custom-purple">
         <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-        <div className="inline-flex h-full w-full items-center justify-center rounded-xl bg-black px-3 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
-          <div className="p-16 lg:w-1/2 flex flex-col justify-center text-start">
-            <h1 className="text-4xl">Code using our built in IDE.</h1>
+        <div className="flex h-[500px] w-full items-center justify-center rounded-xl bg-black px-3 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
+          <div className="p-16 lg:w-1/2 flex flex-col justify-center text-start overflow-y-auto">
+            <h1 className="text-4xl">Code using our built-in IDE.</h1>
             <p className="pt-10 text-xl text-gray-400">
-              LeetScraper offers a fully integrated IDE that allows users to
-              write, test, and debug their code right in the browser. With
-              real-time feedback, syntax highlighting, and problem-specific
-              insights, you can seamlessly tackle LeetCode problems without
-              switching between platforms. Whether you're practicing algorithms
-              or learning new concepts, our custom IDE is designed to optimize
-              your coding experience.
+              LeetScraper offers a fully integrated IDE, allowing users to write, test, and debug their code in the browser. With real-time feedback, syntax highlighting, and insights, you can tackle LeetCode problems without switching platforms. Whether practicing algorithms or learning new concepts, our IDE optimizes your coding experience.
             </p>
           </div>
-          <div className="p-16 lg:w-1/2 flex flex-col justify-center text-center">
-            Image of the code editor
+          <div className="lg:w-1/2 flex justify-center">
+            <img src={codeEditorPic} className="w-full h-auto object-cover rounded-md" />
           </div>
         </div>
       </div>
 
       <div className="w-full md:w-5/6 lg:w-3/4 relative overflow-hidden rounded-xl border border-gray-800 p-[1px] my-36 mx-auto shadow-custom-purple">
         <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-        <div className="inline-flex h-full w-full items-center justify-center rounded-xl bg-black px-3 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
-          <div className="p-16 lg:w-1/2 flex flex-col justify-center text-start">
+        <div className="flex h-[500px] w-full items-center justify-center rounded-xl bg-black px-3 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
+          <div className="p-16 lg:w-1/2 flex flex-col justify-center text-start overflow-y-auto">
             <h1 className="text-4xl">
-              Track Your Progress and Get Instant Feedback
+              Instant feedback with statistics
             </h1>
             <p className="pt-10 text-xl text-gray-400">
-              With LeetScraper, you can write detailed notes for every problem
-              you work on, track your progress, and view feedback tailored
-              specifically to your code. Whether you're solving a problem for
-              the first time or revisiting it, our platform provides a
-              comprehensive view of your learning journey. Stay motivated by
-              seeing how far you've come with progression tracking and build
-              confidence with constructive feedback designed to help you
-              improve.
+              LeetScraper lets you write detailed notes for each problem, track your progress, and get feedback specific to your code. Whether it's your first time solving a problem or revisiting it, our platform gives a comprehensive view of your journey. Stay motivated with progression tracking and build confidence through constructive feedback to help you improve.
             </p>
           </div>
-          <div className="p-16 lg:w-1/2 flex flex-col justify-center text-center">
-            Image of the notes and feedback go here
+          <div className="lg:w-1/2 flex justify-center">
+            <img src={feedbackPic} className="w-full h-auto object-cover rounded-md" />
           </div>
         </div>
       </div>

@@ -79,7 +79,7 @@ const Header = ({ isLoggedIn }) => {
                 className="transition focus:outline-none font-light text-2xl"
                 href="/"
               >
-                <p className="flex justify-center py-2 px-4 rounded-md hover:bg-white/10">Home</p>
+                <p className="flex justify-center py-2 px-4 rounded-lg hover:bg-white/10 transition-colors duration-300">Home</p>
               </a>
             </li>
             <li className="">
@@ -87,7 +87,7 @@ const Header = ({ isLoggedIn }) => {
                 className="transition focus:outline-none font-light text-2xl"
                 href="/todolist"
               >
-                <p className="flex justify-center py-2 px-4 rounded-md hover:bg-white/10">Code</p>
+                <p className="flex justify-center py-2 px-4 rounded-lg hover:bg-white/10 transition-colors duration-300">Code</p>
               </a>
             </li>
             <li className="">
@@ -95,7 +95,7 @@ const Header = ({ isLoggedIn }) => {
                 className="transition focus:outline-none font-light text-2xl"
                 href="/search"
               >
-                <p className="flex justify-center py-2 px-4 rounded-md hover:bg-white/10">Search</p>
+                <p className="flex justify-center py-2 px-4 rounded-lg hover:bg-white/10 transition-colors duration-300">Search</p>
               </a>
             </li>
           </ul>
@@ -109,14 +109,14 @@ const Header = ({ isLoggedIn }) => {
           {isLoggedIn ? (
             <a
               href="/logout"
-              className="whitespace-nowrap rounded focus:outline-none hover:text-opacity-50 font-light text-2xl text-white py-2 px-4 hover:bg-white/10"
+              className="whitespace-nowrap rounded-lg focus:outline-none font-light text-2xl text-white py-2 px-4 hover:bg-white/10 transition-colors duration-300"
             >
               Log out
             </a>
           ) : (
             <a
               href="/login"
-              className="whitespace-nowrap rounded focus:outline-none hover:text-opacity-50 font-light text-2xl text-white py-2 px-4 hover:bg-white/20"
+              className="whitespace-nowrap rounded-lg focus:outline-none font-light text-2xl text-white py-2 px-4 hover:bg-white/10 transition-colors duration-300"
             >
               Log in
             </a>
