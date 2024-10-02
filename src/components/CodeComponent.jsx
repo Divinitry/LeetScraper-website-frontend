@@ -80,7 +80,6 @@ const CodeComponent = () => {
               backgroundColor: "#1c1c1c",
               borderRadius: "5px",
               margin: "0 10px",
-              padding: "0",
               transition: "background-color 0.3s ease, color 0.3s ease",
               padding: "0px",
             },

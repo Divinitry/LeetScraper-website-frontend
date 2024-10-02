@@ -20,30 +20,31 @@ const MainContent = () => {
           </p>
           
           <button
-            onClick={() => navigate("/search")}
-            className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none mx-auto [animation-delay:500ms] animate-fade-up"
-          >
-            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-            <span className="inline-flex h-full items-center justify-center rounded-full bg-gray-950 px-8 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
-              Get Started
-              <div className="pl-2 pr-0">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-                  />
-                </svg>
-              </div>
-            </span>
-          </button>
+  onClick={() => navigate("/search")}
+  className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none mx-auto opacity-0 animate-fade-up [animation-delay:500ms]"
+>
+  <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+  <span className="inline-flex h-full items-center justify-center rounded-full bg-gray-950 px-8 py-1 text-sm font-medium text-gray-50 backdrop-blur-3xl">
+    Get Started
+    <div className="pl-2 pr-0">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="size-5"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+        />
+      </svg>
+    </div>
+  </span>
+</button>
+
         </div>
       </div>
 
