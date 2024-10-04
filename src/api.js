@@ -1,19 +1,13 @@
 import axios from "axios"
 import { ACCESS_TOKEN } from "./constants"
-
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
-    withCredentials: true,
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-    }
+    baseURL: import.meta.env.VITE_API_URL
 })
-
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem(ACCESS_TOKEN)
         if (token) {
-            config.headers.Authorization = `Bearer ${token}` 
+            config.headers.Authorization = `Bearer ${token}`
         }
         return config
     },
@@ -21,5 +15,4 @@ api.interceptors.request.use(
         return Promise.reject(error)
     }
 )
-
 export default api
