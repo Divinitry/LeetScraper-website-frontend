@@ -2,6 +2,10 @@
 
 LeetScraper is an AI-powered platform designed to enhance your LeetCode experience. This website acts as a journal, helper, and motivational tool for LeetCode users, with built-in features like code submission analysis, to-do lists, progress tracking, and code terminal support. It is designed to make practicing algorithm challenges smoother and more insightful, leveraging modern web development technologies and APIs.
 
+## Deployed Site
+
+https://leetscraper.netlify.app/
+
 ## Table of Contents
 - [Project Overview](#project-overview)
 - [Technologies Used](#technologies-used)
