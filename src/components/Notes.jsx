@@ -114,7 +114,7 @@ const Notes = ({ id }) => {
         </button>
       </div>
 
-      <div className="flex flex-row space-x-4 overflow-x-scroll justify-start">
+      <div className="flex flex-row space-x-4 overflow-x-scroll justify-center">
         {allNotes.length === 0 ? (
           <div className="w-80 h-80 bg-white/5 rounded-md flex justify-center items-center"></div>
         ) : (
