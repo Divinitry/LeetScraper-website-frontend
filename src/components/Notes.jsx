@@ -114,14 +114,14 @@ const Notes = ({ id }) => {
         </button>
       </div>
 
-      <div className="flex flex-row space-x-4 overflow-x-scroll justify-start">
+      <div className="flex flex-row space-x-4 overflow-x-scroll">
         {allNotes.length === 0 ? (
           <div className="w-80 h-80 bg-white/5 rounded-md flex justify-center items-center"></div>
         ) : (
           allNotes.map((note, index) => (
             <div
               key={index}
-              className="min-w-80 w-80 h-80 bg-white/10 rounded-md relative cursor-pointer flex flex-col"
+              className="min-w-80 w-80 h-80 bg-white/10 rounded-md relative cursor-pointer flex flex-col justify-start"
               onClick={() => openNoteModal(note)}
             >
               <div className="flex justify-between p-4">
